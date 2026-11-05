@@ -69,7 +69,17 @@
                     <i class="fas fa-vial text-thunder-blue"></i> Planta & Laboratorio Industrial
                 </span>
             </div>
-            <div class="flex items-center gap-3">
+            <div class="flex items-center gap-4">
+                <!-- Redes Sociales Discretas en TopBar -->
+                <div class="flex items-center gap-3 border-r border-slate-800 pr-3">
+                    <a href="https://www.instagram.com/productosthunder?exln=MWpwMGtyeWVmY3Jocw==" target="_blank" rel="noopener noreferrer" title="Instagram PRODUCTOS THUNDER" class="text-slate-400 hover:text-pink-500 transition text-xs">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="https://www.tiktok.com/@productos.thunder?_r=1&_t=ZS-9B8hKj01cyT" target="_blank" rel="noopener noreferrer" title="TikTok PRODUCTOS THUNDER" class="text-slate-400 hover:text-cyan-400 transition text-xs">
+                        <i class="fab fa-tiktok"></i>
+                    </a>
+                </div>
+
                 <button onclick="openLoginModal()" class="bg-slate-800 hover:bg-marra-green text-slate-200 hover:text-white px-3.5 py-1.5 rounded-lg text-[11px] font-semibold transition-all duration-200 flex items-center gap-2 border border-slate-700 shadow-sm">
                     <i class="fas fa-user-lock text-marra-green group-hover:text-white"></i> Acceso Backoffice
                 </button>
@@ -410,396 +420,56 @@
                                     <span class="text-slate-500">ventas@marraflab.com / info@productosthunder.com</span>
                                 </div>
                             </div>
+                            <div class="p-4 bg-white rounded-xl border border-slate-200 flex items-center justify-between">
+                                <div>
+                                    <strong class="block text-slate-900 font-bold">Redes Oficiales THUNDER</strong>
+                                    <span class="text-slate-500 text-[11px]">Síguenos en nuestras plataformas digitales</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <a href="https://www.instagram.com/productosthunder?exln=MWpwMGtyeWVmY3Jocw==" target="_blank" class="w-8 h-8 rounded-lg bg-pink-50 text-pink-600 hover:bg-pink-600 hover:text-white flex items-center justify-center transition text-sm">
+                                        <i class="fab fa-instagram"></i>
+                                    </a>
+                                    <a href="https://www.tiktok.com/@productos.thunder?_r=1&_t=ZS-9B8hKj01cyT" target="_blank" class="w-8 h-8 rounded-lg bg-slate-900 text-cyan-400 hover:bg-black hover:text-cyan-300 flex items-center justify-center transition text-sm">
+                                        <i class="fab fa-tiktok"></i>
+                                    </a>
+                                </div>
+                            </div>
                         </div>
 
                         <!-- Mapa Interactivo -->
                         <div class="rounded-2xl overflow-hidden shadow-md h-56 border border-slate-300">
-                            <iframe class="w-full h-full border-0" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.790082729352!2d-78.481!3d-0.18!2m3!1f0!2f0!3f0!2m3!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zM8KwMT\'OC4wIlMgNz electrolysis!5e0!3m2!1ses!2sec!4v1620000000000!5m2!1ses!2sec" allowfullscreen="" loading="lazy"></iframe>
+                            <iframe class="w-full h-full border-0" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.790082729352!2d-78.481!3d-0.18!2m3!1f0!2f0!3f0!2m3!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zM8KwMT'OC4wIlMgNz electrolysis!5e0!3m2!1ses!2sec!4v1620000000000!5m2!1ses!2sec" allowfullscreen="" loading="lazy"></iframe>
                         </div>
                     </div>
 
                     <!-- Formulario de Contacto -->
-                    <div class="lg:col-span-7">
-                        <div class="bg-white p-8 rounded-2xl shadow-xl border border-slate-200">
-                            <h3 class="text-xl font-black text-slate-900 mb-6 flex items-center gap-2">
-                                <i class="fas fa-paper-plane text-marra-green"></i> Formulario de Cotización Directa
-                            </h3>
-                            <form id="contact-form" onsubmit="submitContactForm(event)" class="space-y-4">
-                                <div class="grid sm:grid-cols-2 gap-4">
-                                    <div>
-                                        <label class="block text-xs font-bold text-slate-700 mb-1">Nombre Completo *</label>
-                                        <input type="text" required id="c-name" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-xs focus:ring-2 focus:ring-marra-green outline-none">
-                                    </div>
-                                    <div>
-                                        <label class="block text-xs font-bold text-slate-700 mb-1">Empresa / Razón Social</label>
-                                        <input type="text" id="c-company" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-xs focus:ring-2 focus:ring-marra-green outline-none">
-                                    </div>
-                                </div>
-                                <div class="grid sm:grid-cols-2 gap-4">
-                                    <div>
-                                        <label class="block text-xs font-bold text-slate-700 mb-1">Correo Electrónico *</label>
-                                        <input type="email" required id="c-email" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-xs focus:ring-2 focus:ring-marra-green outline-none">
-                                    </div>
-                                    <div>
-                                        <label class="block text-xs font-bold text-slate-700 mb-1">Teléfono Móvil *</label>
-                                        <input type="tel" required id="c-phone" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-xs focus:ring-2 focus:ring-marra-green outline-none">
-                                    </div>
-                                </div>
-                                <div>
-                                    <label class="block text-xs font-bold text-slate-700 mb-1">Detalle del Requerimiento Químico</label>
-                                    <textarea required id="c-message" rows="4" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-xs focus:ring-2 focus:ring-marra-green outline-none" placeholder="Especifique volúmenes o insumos requeridos (ej. PRODUCTOS THUNDER)..."></textarea>
-                                </div>
-                                <button type="submit" class="w-full bg-marra-orange hover:bg-marra-darkorange text-white font-bold py-3.5 rounded-xl shadow-md transition text-xs uppercase tracking-wider">
-                                    Enviar a Departamento Comercial
-                                </button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
-
+<!-- ... existing code -->
     <!-- FOOTER -->
     <footer class="bg-slate-950 text-slate-400 py-12 border-t border-slate-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid md:grid-cols-4 gap-8 mb-8">
                 <div>
-                    <span class="text-xl font-black text-white">MARRA<span class="text-marra-green">FLAB</span></span>
-                    <p class="text-xs text-slate-400 mt-2 leading-relaxed">MARRAFLAB Productos Químicos S.A.S. - Formulación de alta efectividad y la línea oficial de insumos de limpieza PRODUCTOS THUNDER.</p>
+                    <div id="footer-logo-container" class="mb-2">
+                        <span class="text-xl font-black text-white">MARRA<span class="text-marra-green">FLAB</span></span>
+                    </div>
+                    <p class="text-xs text-slate-400 leading-relaxed">MARRAFLAB Productos Químicos S.A.S. - Formulación de alta efectividad y la línea oficial de insumos de limpieza PRODUCTOS THUNDER.</p>
+                    
+                    <!-- Redes Sociales Footer -->
+                    <div class="flex items-center gap-3 mt-4">
+                        <a href="https://www.instagram.com/productosthunder?exln=MWpwMGtyeWVmY3Jocw==" target="_blank" class="w-8 h-8 rounded-lg bg-slate-900 hover:bg-pink-600 text-slate-300 hover:text-white flex items-center justify-center transition text-xs border border-slate-800">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://www.tiktok.com/@productos.thunder?_r=1&_t=ZS-9B8hKj01cyT" target="_blank" class="w-8 h-8 rounded-lg bg-slate-900 hover:bg-black text-slate-300 hover:text-cyan-400 flex items-center justify-center transition text-xs border border-slate-800">
+                            <i class="fab fa-tiktok"></i>
+                        </a>
+                        <a href="#" id="footer-wa-link" target="_blank" class="w-8 h-8 rounded-lg bg-slate-900 hover:bg-emerald-600 text-slate-300 hover:text-white flex items-center justify-center transition text-xs border border-slate-800">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                    </div>
                 </div>
                 <div>
                     <h5 class="text-white text-xs font-extrabold uppercase tracking-widest mb-3">Líneas de Producción</h5>
-                    <ul class="space-y-1.5 text-xs">
-                        <li><a href="#productos" class="hover:text-thunder-blue transition font-bold">PRODUCTOS THUNDER</a></li>
-                        <li><a href="#servicios" class="hover:text-white transition">Desinfección Hospitalaria</a></li>
-                        <li><a href="#servicios" class="hover:text-white transition">Detergentes Industriales</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h5 class="text-white text-xs font-extrabold uppercase tracking-widest mb-3">Navegación</h5>
-                    <ul class="space-y-1.5 text-xs">
-                        <li><a href="#nosotros" class="hover:text-white transition">Quiénes Somos</a></li>
-                        <li><a href="#testimonios" class="hover:text-white transition">Reseñas de Clientes</a></li>
-                        <li><a href="#blog" class="hover:text-white transition">Blog Químico</a></li>
-                        <li><a href="#contacto" class="hover:text-white transition">Contacto Directo</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h5 class="text-white text-xs font-extrabold uppercase tracking-widest mb-3">Acceso Interno</h5>
-                    <button onclick="openLoginModal()" class="text-xs text-marra-green font-bold hover:underline flex items-center gap-1">
-                        <i class="fas fa-lock"></i> Iniciar Sesión Backoffice
-                    </button>
-                </div>
-            </div>
-            <div class="pt-8 border-t border-slate-900 text-center text-xs text-slate-500 flex flex-col sm:flex-row justify-between items-center gap-4">
-                <p>&copy; 2026 MARRAFLAB Productos Químicos S.A.S. Todos los derechos reservados.</p>
-                <span class="text-slate-600">PRODUCTOS THUNDER es marca registrada de MARRAFLAB S.A.S.</span>
-            </div>
-        </div>
-    </footer>
-
-    <!-- BOTÓN Y CHATBOT FLOTANTE WHATSAPP INTERACTIVO -->
-    <div id="whatsapp-widget" class="fixed bottom-6 right-6 z-30">
-        <!-- Ventana Chatbot Interactivo -->
-        <div id="wa-chat-window" class="hidden bg-white rounded-2xl shadow-2xl border border-slate-200 w-80 sm:w-96 overflow-hidden mb-4 transition-all duration-300">
-            <div class="bg-emerald-600 p-4 text-white flex justify-between items-center">
-                <div class="flex items-center gap-2.5">
-                    <div class="w-9 h-9 bg-white/20 rounded-full flex items-center justify-center text-lg">
-                        <i class="fab fa-whatsapp"></i>
-                    </div>
-                    <div>
-                        <h4 class="font-black text-sm leading-tight">Asistente MARRAFLAB</h4>
-                        <span class="text-[10px] text-emerald-100 flex items-center gap-1">
-                            <span class="w-2 h-2 rounded-full bg-emerald-300 animate-pulse"></span> En línea para atenderte
-                        </span>
-                    </div>
-                </div>
-                <button onclick="toggleWaChat()" class="text-emerald-100 hover:text-white text-xl">&times;</button>
-            </div>
-            
-            <div class="p-4 bg-slate-50 max-h-80 overflow-y-auto space-y-3 text-xs">
-                <div class="bg-white p-3 rounded-xl border border-slate-200 shadow-sm text-slate-700">
-                    <p id="wa-welcome-text">¡Hola! Bienvenido a MARRAFLAB S.A.S. ¿En qué podemos ayudarte con la línea PRODUCTOS THUNDER o nuestros servicios?</p>
-                </div>
-                
-                <!-- Opciones dinámicas creadas en Backoffice -->
-                <div id="wa-options-container" class="space-y-2 pt-2">
-                    <!-- Cargadas dinámicamente -->
-                </div>
-            </div>
-
-            <div class="p-3 bg-white border-t border-slate-200 text-center">
-                <a id="wa-direct-link" href="#" target="_blank" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2 px-4 rounded-xl text-xs flex items-center justify-center gap-2 transition">
-                    <i class="fab fa-whatsapp"></i> Hablar con un Asesor Químico
-                </a>
-            </div>
-        </div>
-
-        <!-- Botón Lanzador -->
-        <button onclick="toggleWaChat()" class="w-14 h-14 bg-emerald-500 hover:bg-emerald-600 text-white rounded-full flex items-center justify-center text-2xl shadow-2xl transition hover:scale-110 relative group ml-auto">
-            <i class="fab fa-whatsapp"></i>
-            <span class="absolute right-16 bg-slate-900 text-white text-xs py-1.5 px-3 rounded-lg shadow-md whitespace-nowrap opacity-0 group-hover:opacity-100 transition font-bold">
-                Chatbot WhatsApp
-            </span>
-        </button>
-    </div>
-
-    <!-- MODAL DETALLE PRODUCTO / BLOG -->
-    <div id="detail-modal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto p-6 relative shadow-2xl border border-slate-200">
-            <button onclick="closeDetailModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 text-2xl font-bold">&times;</button>
-            <div id="detail-modal-content"></div>
-        </div>
-    </div>
-
-    <!-- MODAL LOGIN AL BACKOFFICE -->
-    <div id="login-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-slate-900 border border-slate-800 text-white rounded-2xl max-w-md w-full p-8 shadow-2xl relative">
-            <button onclick="closeLoginModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white text-xl">&times;</button>
-            
-            <div class="text-center mb-6">
-                <div class="w-12 h-12 molecule-badge rounded-xl flex items-center justify-center text-white text-2xl mx-auto mb-3">
-                    <i class="fas fa-user-shield"></i>
-                </div>
-                <h3 class="text-xl font-black text-white">Acceso Administrador</h3>
-                <p class="text-xs text-slate-400 mt-1">MARRAFLAB Productos Químicos S.A.S.</p>
-            </div>
-
-            <form onsubmit="handleLogin(event)" class="space-y-4">
-                <div>
-                    <label class="block text-xs font-bold text-slate-300 mb-1">Usuario / Email</label>
-                    <input type="text" id="login-user" required placeholder="admin" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3.5 py-2.5 text-xs text-white outline-none focus:ring-2 focus:ring-marra-green">
-                </div>
-                <div>
-                    <label class="block text-xs font-bold text-slate-300 mb-1">Contraseña</label>
-                    <input type="password" id="login-pass" required placeholder="••••••••" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3.5 py-2.5 text-xs text-white outline-none focus:ring-2 focus:ring-marra-green">
-                </div>
-                <div id="login-error" class="text-rose-400 text-xs font-bold hidden text-center">Credenciales incorrectas. Intente nuevamente.</div>
-                <button type="submit" class="w-full bg-marra-green hover:bg-marra-darkgreen text-white font-bold py-3 rounded-xl transition text-xs uppercase tracking-wider shadow-lg">
-                    Ingresar al Panel
-                </button>
-            </form>
-        </div>
-    </div>
-
-    <!-- BACKOFFICE ADMINISTRADOR INTEGRADO -->
-    <div id="backoffice-modal" class="fixed inset-0 bg-slate-950/90 backdrop-blur-md z-50 hidden flex items-center justify-center p-2 sm:p-6">
-        <div class="bg-slate-900 text-slate-100 rounded-2xl max-w-6xl w-full h-[94vh] flex flex-col overflow-hidden shadow-2xl border border-slate-700">
-            <!-- Header Backoffice -->
-            <div class="px-6 py-4 bg-slate-800 border-b border-slate-700 flex justify-between items-center">
-                <div class="flex items-center gap-3">
-                    <div class="w-9 h-9 molecule-badge rounded-lg flex items-center justify-center text-white text-lg">
-                        <i class="fas fa-sliders-h"></i>
-                    </div>
-                    <div>
-                        <h3 class="font-bold text-white text-base leading-tight">Backoffice MARRAFLAB & PRODUCTOS THUNDER</h3>
-                        <span id="admin-user-badge" class="text-xs text-marra-green font-mono">Sesión Iniciada</span>
-                    </div>
-                </div>
-                <div class="flex items-center gap-3">
-                    <button onclick="logoutAdmin()" class="bg-rose-500/20 text-rose-400 hover:bg-rose-500/30 px-3 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1">
-                        <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
-                    </button>
-                    <button onclick="toggleBackofficeModal()" class="bg-slate-700 hover:bg-slate-600 text-white w-8 h-8 rounded-lg flex items-center justify-center transition">
-                        <i class="fas fa-times"></i>
-                    </button>
-                </div>
-            </div>
-
-            <!-- Cuerpo Backoffice -->
-            <div class="flex-grow flex flex-col md:flex-row overflow-hidden">
-                <!-- Sidebar Nav -->
-                <div class="w-full md:w-64 bg-slate-950 border-r border-slate-800 p-3 space-y-1 overflow-y-auto text-xs">
-                    <button onclick="switchAdminTab('users')" id="tab-btn-users" class="admin-tab-btn w-full text-left px-3 py-2.5 rounded-xl font-semibold flex items-center gap-2.5 text-slate-400 hover:text-white hover:bg-slate-800/60 transition">
-                        <i class="fas fa-users-cog w-4 text-center text-marra-green"></i> Usuarios
-                    </button>
-                    <button onclick="switchAdminTab('services')" id="tab-btn-services" class="admin-tab-btn w-full text-left px-3 py-2.5 rounded-xl font-semibold flex items-center gap-2.5 text-slate-400 hover:text-white hover:bg-slate-800/60 transition">
-                        <i class="fas fa-concierge-bell w-4 text-center text-marra-green"></i> Servicios
-                    </button>
-                    <button onclick="switchAdminTab('testimonials')" id="tab-btn-testimonials" class="admin-tab-btn w-full text-left px-3 py-2.5 rounded-xl font-semibold flex items-center gap-2.5 text-slate-400 hover:text-white hover:bg-slate-800/60 transition">
-                        <i class="fas fa-star w-4 text-center text-marra-green"></i> Testimonios & Google
-                    </button>
-                    <button onclick="switchAdminTab('products')" id="tab-btn-products" class="admin-tab-btn w-full text-left px-3 py-2.5 rounded-xl font-semibold flex items-center gap-2.5 text-slate-400 hover:text-white hover:bg-slate-800/60 transition">
-                        <i class="fas fa-bolt w-4 text-center text-thunder-blue"></i> PRODUCTOS THUNDER
-                    </button>
-                    <button onclick="switchAdminTab('whatsapp')" id="tab-btn-whatsapp" class="admin-tab-btn w-full text-left px-3 py-2.5 rounded-xl font-semibold flex items-center gap-2.5 text-slate-400 hover:text-white hover:bg-slate-800/60 transition">
-                        <i class="fab fa-whatsapp w-4 text-center text-marra-green"></i> Bot de WhatsApp
-                    </button>
-                    <button onclick="switchAdminTab('gallery')" id="tab-btn-gallery" class="admin-tab-btn w-full text-left px-3 py-2.5 rounded-xl font-semibold flex items-center gap-2.5 text-slate-400 hover:text-white hover:bg-slate-800/60 transition">
-                        <i class="fas fa-images w-4 text-center text-marra-green"></i> Galería
-                    </button>
-                    <button onclick="switchAdminTab('blog')" id="tab-btn-blog" class="admin-tab-btn w-full text-left px-3 py-2.5 rounded-xl font-semibold flex items-center gap-2.5 text-slate-400 hover:text-white hover:bg-slate-800/60 transition">
-                        <i class="fas fa-blog w-4 text-center text-marra-green"></i> Editor de Blog
-                    </button>
-                    <button onclick="switchAdminTab('settings')" id="tab-btn-settings" class="admin-tab-btn w-full text-left px-3 py-2.5 rounded-xl font-semibold flex items-center gap-2.5 text-slate-400 hover:text-white hover:bg-slate-800/60 transition border-t border-slate-800 mt-2 pt-3">
-                        <i class="fas fa-cog w-4 text-center text-marra-orange"></i> Configuración & SEO
-                    </button>
-                </div>
-
-                <!-- Contenido Administrador -->
-                <div class="flex-grow p-6 overflow-y-auto bg-slate-900 text-slate-200">
-                    
-                    <!-- TAB 1: USUARIOS -->
-                    <div id="admin-users" class="admin-content space-y-4 hidden">
-                        <h4 class="text-lg font-bold text-white">Gestión de Usuarios del Sistema</h4>
-                        <form onsubmit="addUser(event)" class="grid sm:grid-cols-4 gap-3 bg-slate-800 p-4 rounded-xl border border-slate-700">
-                            <input type="text" id="u-name" required placeholder="Nombre Usuario" class="bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white">
-                            <input type="text" id="u-email" required placeholder="Usuario / Login" class="bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white">
-                            <input type="password" id="u-pass" required placeholder="Contraseña" class="bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white">
-                            <select id="u-role" class="bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white">
-                                <option value="Administrador">Administrador</option>
-                                <option value="Operador">Operador de Contenidos</option>
-                            </select>
-                            <button type="submit" class="sm:col-span-4 bg-marra-green text-white font-bold py-2 rounded-lg text-xs">+ Crear Usuario</button>
-                        </form>
-                        <div id="users-table-container"></div>
-                    </div>
-
-                    <!-- TAB 2: SERVICIOS -->
-                    <div id="admin-services" class="admin-content space-y-4 hidden">
-                        <h4 class="text-lg font-bold text-white">Gestor de Servicios Químicos</h4>
-                        <form onsubmit="addService(event)" class="bg-slate-800 p-4 rounded-xl border border-slate-700 space-y-3">
-                            <div class="grid sm:grid-cols-2 gap-3">
-                                <input type="text" id="s-title" required placeholder="Título del Servicio" class="bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white">
-                                <input type="text" id="s-icon" required placeholder="Icono FontAwesome (ej: fa-pump-medical)" class="bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white">
-                            </div>
-                            <div>
-                                <label class="block text-[10px] text-slate-400 mb-1">Subir Imagen desde escritorio (Convertir a Texto Base64)</label>
-                                <input type="file" id="s-file" accept="image/*" class="w-full text-xs text-slate-400 bg-slate-900 border border-slate-700 rounded-lg p-1.5">
-                            </div>
-                            <textarea id="s-desc" required placeholder="Descripción técnica del servicio..." class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white" rows="2"></textarea>
-                            <button type="submit" class="bg-marra-green text-white font-bold px-4 py-2 rounded-lg text-xs">+ Publicar Servicio</button>
-                        </form>
-                        <div id="admin-services-list" class="grid sm:grid-cols-2 gap-3"></div>
-                    </div>
-
-                    <!-- TAB 3: TESTIMONIOS -->
-                    <div id="admin-testimonials" class="admin-content space-y-4 hidden">
-                        <h4 class="text-lg font-bold text-white">Gestor de Testimonios</h4>
-                        <form onsubmit="addTestimonial(event)" class="bg-slate-800 p-4 rounded-xl border border-slate-700 space-y-3">
-                            <div class="grid sm:grid-cols-3 gap-3">
-                                <input type="text" id="t-author" required placeholder="Cliente / Empresa" class="bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white">
-                                <input type="text" id="t-role" placeholder="Cargo Institucional" class="bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white">
-                                <select id="t-rating" class="bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white">
-                                    <option value="5">5 Estrellas ★★★★★</option>
-                                    <option value="4">4 Estrellas ★★★★☆</option>
-                                </select>
-                            </div>
-                            <textarea id="t-text" required placeholder="Opinión del cliente..." class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white" rows="2"></textarea>
-                            <button type="submit" class="bg-marra-green text-white font-bold px-4 py-2 rounded-lg text-xs">+ Registrar Testimonio</button>
-                        </form>
-                        <div id="admin-testimonials-list" class="space-y-2"></div>
-                    </div>
-
-                    <!-- TAB 4: PRODUCTOS THUNDER -->
-                    <div id="admin-products" class="admin-content space-y-4 hidden">
-                        <h4 class="text-lg font-bold text-white">Catálogo PRODUCTOS THUNDER</h4>
-                        <form onsubmit="addProduct(event)" class="bg-slate-800 p-4 rounded-xl border border-slate-700 space-y-3">
-                            <div class="grid sm:grid-cols-3 gap-3">
-                                <input type="text" id="p-title" required placeholder="Nombre del Producto THUNDER" class="bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white">
-                                <select id="p-category" class="bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white">
-                                    <option value="Desinfectantes">Desinfectantes</option>
-                                    <option value="Detergentes Industriales">Detergentes Industriales</option>
-                                    <option value="Sanitizantes">Sanitizantes</option>
-                                    <option value="Línea Automotriz">Línea Automotriz</option>
-                                </select>
-                                <input type="text" id="p-price" required placeholder="Precio ($ USD)" class="bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white">
-                            </div>
-                            <div class="grid sm:grid-cols-2 gap-3">
-                                <div>
-                                    <label class="block text-[10px] text-slate-400 mb-1">Subir Imagen desde Escritorio (Base64)</label>
-                                    <input type="file" id="p-file" accept="image/*" class="w-full text-xs text-slate-400 bg-slate-900 border border-slate-700 rounded-lg p-1">
-                                </div>
-                                <div>
-                                    <label class="block text-[10px] text-slate-400 mb-1">O colocar URL Directa de Imagen</label>
-                                    <input type="text" id="p-img" placeholder="https://..." class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white">
-                                </div>
-                            </div>
-                            <textarea id="p-desc" required placeholder="Especificaciones químicas y modo de uso..." class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white" rows="2"></textarea>
-                            <button type="submit" class="bg-thunder-blue text-white font-bold px-4 py-2 rounded-lg text-xs">+ Publicar Producto THUNDER</button>
-                        </form>
-                        <div id="admin-products-list" class="grid sm:grid-cols-2 gap-3"></div>
-                    </div>
-
-                    <!-- TAB 5: WHATSAPP BOT -->
-                    <div id="admin-whatsapp" class="admin-content space-y-6 hidden">
-                        <h4 class="text-lg font-bold text-white">Configurador del Chatbot de WhatsApp</h4>
-                        <div class="grid md:grid-cols-2 gap-6">
-                            <div class="bg-slate-800 p-5 rounded-xl border border-slate-700 space-y-3">
-                                <h5 class="text-xs font-bold text-emerald-400 uppercase">Mensaje Inicial</h5>
-                                <div>
-                                    <label class="block text-xs text-slate-400 mb-1">Número de Recepción (sin +)</label>
-                                    <input type="text" id="wa-phone-input" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white">
-                                </div>
-                                <div>
-                                    <label class="block text-xs text-slate-400 mb-1">Texto de Saludo en la Ventana</label>
-                                    <textarea id="wa-msg-input" rows="3" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white"></textarea>
-                                </div>
-                                <button onclick="saveWhatsAppConfig()" class="bg-emerald-600 text-white font-bold px-4 py-2 rounded-lg text-xs">Guardar Configuración General</button>
-                            </div>
-
-                            <!-- Creador de Opciones Flujo Bot -->
-                            <div class="bg-slate-800 p-5 rounded-xl border border-slate-700 space-y-3">
-                                <h5 class="text-xs font-bold text-marra-orange uppercase">Opciones de Respuesta Rápida</h5>
-                                <form onsubmit="addWaOption(event)" class="space-y-2">
-                                    <input type="text" id="wa-opt-label" required placeholder="Texto del Botón (Ej. Precios THUNDER)" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white">
-                                    <textarea id="wa-opt-reply" required placeholder="Respuesta que enviará al chat..." class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white" rows="2"></textarea>
-                                    <button type="submit" class="bg-marra-green text-white font-bold px-4 py-2 rounded-lg text-xs">+ Agregar Opción al Botón</button>
-                                </form>
-                                <div id="wa-options-admin-list" class="space-y-2 pt-2"></div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- TAB 6: GALERÍA -->
-                    <div id="admin-gallery" class="admin-content space-y-4 hidden">
-                        <h4 class="text-lg font-bold text-white">Gestor de Fotos de Galería</h4>
-                        <form onsubmit="addGalleryImage(event)" class="bg-slate-800 p-4 rounded-xl border border-slate-700 space-y-3">
-                            <div class="grid sm:grid-cols-2 gap-3">
-                                <input type="text" id="g-title" required placeholder="Título del Proyecto / Ensayo Químico" class="bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white">
-                                <input type="file" id="g-file" accept="image/*" class="w-full text-xs text-slate-400 bg-slate-900 border border-slate-700 rounded-lg p-1">
-                            </div>
-                            <button type="submit" class="bg-marra-green text-white font-bold py-2 px-4 rounded-lg text-xs">+ Subir Fotografía Base64</button>
-                        </form>
-                        <div id="admin-gallery-list" class="grid sm:grid-cols-3 gap-3"></div>
-                    </div>
-
-                    <!-- TAB 7: BLOG ("MINI WORD" WYSIWYG) -->
-                    <div id="admin-blog" class="admin-content space-y-4 hidden">
-                        <h4 class="text-lg font-bold text-white">Editor de Blog Técnico ("Mini Word")</h4>
-                        <form onsubmit="addBlogPost(event)" class="bg-slate-800 p-4 rounded-xl border border-slate-700 space-y-3">
-                            <div class="grid sm:grid-cols-2 gap-3">
-                                <input type="text" id="b-title" required placeholder="Título del Artículo" class="bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white">
-                                <div>
-                                    <label class="block text-[10px] text-slate-400 mb-1">Imagen Portada desde Escritorio</label>
-                                    <input type="file" id="b-file" accept="image/*" class="w-full text-xs text-slate-400 bg-slate-900 border border-slate-700 rounded-lg p-1">
-                                </div>
-                            </div>
-                            
-                            <!-- Barra de Herramientas Estilo Mini Word -->
-                            <div class="border border-slate-700 rounded-xl overflow-hidden bg-slate-900">
-                                <div class="bg-slate-950 p-2 border-b border-slate-800 flex flex-wrap gap-1 text-slate-300">
-                                    <button type="button" onclick="execCmd('bold')" class="px-2.5 py-1 hover:bg-slate-800 rounded font-bold text-xs"><b>B</b></button>
-                                    <button type="button" onclick="execCmd('italic')" class="px-2.5 py-1 hover:bg-slate-800 rounded italic text-xs"><i>I</i></button>
-                                    <button type="button" onclick="execCmd('underline')" class="px-2.5 py-1 hover:bg-slate-800 rounded underline text-xs"><u>U</u></button>
-                                    <div class="h-4 w-px bg-slate-700 my-auto mx-1"></div>
-                                    <button type="button" onclick="execCmd('insertUnorderedList')" class="px-2.5 py-1 hover:bg-slate-800 rounded text-xs"><i class="fas fa-list-ul"></i></button>
-                                    <button type="button" onclick="execCmd('insertOrderedList')" class="px-2.5 py-1 hover:bg-slate-800 rounded text-xs"><i class="fas fa-list-ol"></i></button>
-                                    <div class="h-4 w-px bg-slate-700 my-auto mx-1"></div>
-                                    <button type="button" onclick="execCmd('justifyLeft')" class="px-2.5 py-1 hover:bg-slate-800 rounded text-xs"><i class="fas fa-align-left"></i></button>
-                                    <button type="button" onclick="execCmd('justifyCenter')" class="px-2.5 py-1 hover:bg-slate-800 rounded text-xs"><i class="fas fa-align-center"></i></button>
-                                </div>
-                                <div id="b-editor" contenteditable="true" class="p-3 text-xs text-slate-100 editor-content min-h-[160px] bg-slate-900">
-                                    Escriba el contenido enriquecido de su artículo aquí...
-                                </div>
-                            </div>
-
-                            <button type="submit" class="bg-marra-green text-white font-bold px-4 py-2 rounded-lg text-xs">+ Publicar Artículo en Blog</button>
-                        </form>
-                        <div id="admin-blog-list" class="space-y-2"></div>
-                    </div>
-
+<!-- ... existing code -->
                     <!-- TAB 8: CONFIGURACIÓN & SEO -->
                     <div id="admin-settings" class="admin-content space-y-6 hidden">
                         <div>
@@ -807,7 +477,7 @@
                             <p class="text-xs text-slate-400">Actualiza los logos oficiales, favicons y los metadatos SEO del DOM en tiempo real.</p>
                         </div>
 
-                        <!-- Carga de Logos desde Escritorio Base64 -->
+                        <!-- Carga de Logos desde Escritorio Base64 u Opción URL -->
                         <div class="bg-slate-800 p-5 rounded-xl border border-slate-700 space-y-4">
                             <h5 class="text-xs font-bold text-marra-green uppercase flex items-center gap-1.5">
                                 <i class="fas fa-image"></i> Gestor de Logos e Íconos
@@ -815,85 +485,25 @@
                             <div class="grid sm:grid-cols-2 gap-4">
                                 <div>
                                     <label class="block text-xs text-slate-400 mb-1">Subir Logo MARRAFLAB desde Escritorio</label>
-                                    <input type="file" id="cfg-logo-file" accept="image/*" class="w-full text-xs text-slate-400 bg-slate-900 border border-slate-700 rounded-lg p-2">
+                                    <input type="file" id="cfg-logo-file" accept="image/*" class="w-full text-xs text-slate-400 bg-slate-900 border border-slate-700 rounded-lg p-2 mb-2">
+                                    <input type="text" id="cfg-logo-url" placeholder="O pegar URL del logo MARRAFLAB" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-white">
                                 </div>
                                 <div>
                                     <label class="block text-xs text-slate-400 mb-1">Subir Logo PRODUCTOS THUNDER desde Escritorio</label>
-                                    <input type="file" id="cfg-thunder-file" accept="image/*" class="w-full text-xs text-slate-400 bg-slate-900 border border-slate-700 rounded-lg p-2">
+                                    <input type="file" id="cfg-thunder-file" accept="image/*" class="w-full text-xs text-slate-400 bg-slate-900 border border-slate-700 rounded-lg p-2 mb-2">
+                                    <input type="text" id="cfg-thunder-url" placeholder="O pegar URL del logo THUNDER" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-white">
                                 </div>
                             </div>
                         </div>
 
                         <!-- Formulario SEO Aplicable -->
-                        <div class="bg-slate-800 p-5 rounded-xl border border-slate-700 space-y-4">
-                            <h5 class="text-xs font-bold text-marra-orange uppercase flex items-center gap-1.5">
-                                <i class="fas fa-search"></i> Metadatos SEO Aplicables al Sitio
-                            </h5>
-                            <div class="space-y-3">
-                                <div>
-                                    <label class="block text-xs text-slate-400 mb-1">Título de la Página (&lt;title&gt;)</label>
-                                    <input type="text" id="cfg-seo-title" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white">
-                                </div>
-                                <div>
-                                    <label class="block text-xs text-slate-400 mb-1">Meta Description</label>
-                                    <textarea id="cfg-seo-desc" rows="2" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white"></textarea>
-                                </div>
-                                <div>
-                                    <label class="block text-xs text-slate-400 mb-1">Meta Keywords</label>
-                                    <input type="text" id="cfg-seo-keywords" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white">
-                                </div>
-                            </div>
-                        </div>
-
-                        <button onclick="saveSiteSettings()" class="bg-marra-green hover:bg-marra-darkgreen text-white font-bold px-6 py-3 rounded-xl text-xs uppercase tracking-wider transition">
-                            Guardar Configuración & Aplicar SEO
-                        </button>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- FIREBASE SDK V13 Y LÓGICA COMPLETA -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/13.2.0/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/13.2.0/firebase-auth.js";
-        import { getFirestore, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/13.2.0/firebase-firestore.js";
-
-        // CONFIGURACIÓN DE FIREBASE MARRAFLAB PROPORCIONADA
-        const firebaseConfig = {
-            apiKey: "AIzaSyBbiUQlpd_wWyofSmLJaKZN4AnFQYjCZAo",
-            authDomain: "marraflabsa.firebaseapp.com",
-            projectId: "marraflabsa",
-            storageBucket: "marraflabsa.firebasestorage.app",
-            messagingSenderId: "1097386286393",
-            appId: "1:1097386286393:web:0f6a26d28d0a9b1911dce8",
-            measurementId: "G-RVLYV5FJEV"
-        };
-
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'marraflabsa-app';
-        let app, db, auth;
-        let isFirebaseAvailable = false;
-
-        try {
-            app = initializeApp(firebaseConfig);
-            db = getFirestore(app);
-            auth = getAuth(app);
-            
-            if (typeof __initial_auth_token !== 'undefined') {
-                await signInWithCustomToken(auth, __initial_auth_token);
-            } else {
-                await signInAnonymously(auth);
-            }
-            isFirebaseAvailable = true;
-        } catch (e) {
-            console.warn("Utilizando estado en memoria local.");
-            isFirebaseAvailable = false;
-        }
-
+<!-- ... existing code -->
         // ESTADO POR DEFECTO COMPLETO
         const defaultState = {
+            brandLogos: {
+                marraflab: '',
+                thunder: ''
+            },
             seo: {
                 title: 'MARRAFLAB Productos Químicos S.A.S. | PRODUCTOS THUNDER',
                 description: 'Líderes en fabricación de insumos químicos industriales y la línea de desinfección y limpieza profesional PRODUCTOS THUNDER.',
@@ -960,11 +570,33 @@
 
         // RENDERIZADO GLOBAL EN DOM
         window.renderAll = function() {
+            // Logos reactivos desde configuración de marca
+            if(window.appData.brandLogos && window.appData.brandLogos.marraflab) {
+                const logoCont = document.getElementById('site-logo-container');
+                if(logoCont) {
+                    logoCont.innerHTML = `
+                        <img src="${window.appData.brandLogos.marraflab}" alt="MARRAFLAB S.A.S." class="h-10 object-contain">
+                        ${window.appData.brandLogos.thunder ? `<div class="h-7 w-px bg-slate-200 hidden sm:block"></div><img src="${window.appData.brandLogos.thunder}" alt="PRODUCTOS THUNDER" class="h-9 object-contain hidden sm:block">` : ''}
+                    `;
+                }
+                const footLogoCont = document.getElementById('footer-logo-container');
+                if(footLogoCont) {
+                    footLogoCont.innerHTML = `<img src="${window.appData.brandLogos.marraflab}" alt="MARRAFLAB S.A.S." class="h-8 object-contain">`;
+                }
+            } else if(window.appData.brandLogos && window.appData.brandLogos.thunder) {
+                const thunderBadge = document.getElementById('thunder-logo-header');
+                if(thunderBadge) {
+                    thunderBadge.innerHTML = `<img src="${window.appData.brandLogos.thunder}" alt="PRODUCTOS THUNDER" class="h-8 object-contain">`;
+                }
+            }
+
             // SEO
             if(window.appData.seo) {
                 document.title = window.appData.seo.title;
                 const mD = document.getElementById('seo-meta-desc');
                 if(mD) mD.content = window.appData.seo.description;
+                const mK = document.getElementById('seo-meta-keywords');
+                if(mK) mK.content = window.appData.seo.keywords;
             }
 
             // Servicios
@@ -1074,164 +706,42 @@
                 waDirect.href = `https://wa.me/${window.appData.whatsapp.phone}?text=${encodeURIComponent(window.appData.whatsapp.msg)}`;
             }
 
+            const footWa = document.getElementById('footer-wa-link');
+            if(footWa) {
+                footWa.href = `https://wa.me/${window.appData.whatsapp.phone}?text=${encodeURIComponent(window.appData.whatsapp.msg)}`;
+            }
+
             renderAdminTables();
         };
-
-        function renderAdminTables() {
-            // Usuarios Table
-            const uCont = document.getElementById('users-table-container');
-            if(uCont) {
-                uCont.innerHTML = `
-                    <table class="w-full text-left text-xs text-slate-300 mt-4">
-                        <thead class="bg-slate-800 uppercase text-[10px] text-slate-400">
-                            <tr><th class="p-2">Nombre</th><th class="p-2">Usuario</th><th class="p-2">Rol</th><th class="p-2">Acción</th></tr>
-                        </thead>
-                        <tbody class="divide-y divide-slate-800">
-                            ${window.appData.users.map((u, i) => `
-                                <tr>
-                                    <td class="p-2 font-bold">${u.name}</td>
-                                    <td class="p-2">${u.email}</td>
-                                    <td class="p-2">${u.role}</td>
-                                    <td class="p-2"><button onclick="deleteUser(${i})" class="text-rose-400"><i class="fas fa-trash"></i></button></td>
-                                </tr>
-                            `).join('')}
-                        </tbody>
-                    </table>
-                `;
-            }
-
-            // Lista WhatsApp Bot Opciones en Admin
-            const waAdminList = document.getElementById('wa-options-admin-list');
-            if(waAdminList) {
-                waAdminList.innerHTML = (window.appData.whatsapp.options || []).map((o, i) => `
-                    <div class="bg-slate-900 p-2 rounded border border-slate-700 flex justify-between items-center text-xs">
-                        <div><strong class="text-white">${o.label}</strong><p class="text-[10px] text-slate-400">${o.reply}</p></div>
-                        <button onclick="deleteWaOption(${i})" class="text-rose-400"><i class="fas fa-trash"></i></button>
-                    </div>
-                `).join('');
-            }
-        }
-
-        // FUNCIÓN CONVERSIÓN DE ARCHIVO LOCAL A BASE64
-        window.fileToBase64 = function(file) {
-            return new Promise((resolve, reject) => {
-                const reader = new FileReader();
-                reader.readAsDataURL(file);
-                reader.onload = () => resolve(reader.result);
-                reader.onerror = error => reject(error);
-            });
-        };
-
-        // ACCIONES BACKOFFICE
-        window.addUser = function(e) {
-            e.preventDefault();
-            window.appData.users.push({
-                id: Date.now().toString(),
-                name: document.getElementById('u-name').value,
-                email: document.getElementById('u-email').value,
-                pass: document.getElementById('u-pass').value,
-                role: document.getElementById('u-role').value
-            });
-            window.saveData();
-            e.target.reset();
-        };
-        window.deleteUser = function(i) { window.appData.users.splice(i, 1); window.saveData(); };
-
-        window.addService = async function(e) {
-            e.preventDefault();
-            let imgData = '';
-            const fileInp = document.getElementById('s-file');
-            if(fileInp.files[0]) {
-                imgData = await window.fileToBase64(fileInp.files[0]);
-            }
-            window.appData.services.push({
-                id: Date.now().toString(),
-                title: document.getElementById('s-title').value,
-                icon: document.getElementById('s-icon').value,
-                desc: document.getElementById('s-desc').value,
-                img: imgData
-            });
-            window.saveData();
-            e.target.reset();
-        };
-
-        window.addProduct = async function(e) {
-            e.preventDefault();
-            let imgData = document.getElementById('p-img').value;
-            const fileInp = document.getElementById('p-file');
-            if(fileInp.files[0]) {
-                imgData = await window.fileToBase64(fileInp.files[0]);
-            }
-            window.appData.products.push({
-                id: Date.now().toString(),
-                title: document.getElementById('p-title').value,
-                category: document.getElementById('p-category').value,
-                price: document.getElementById('p-price').value,
-                img: imgData || 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=500&q=80',
-                desc: document.getElementById('p-desc').value
-            });
-            window.saveData();
-            e.target.reset();
-        };
-
-        window.addGalleryImage = async function(e) {
-            e.preventDefault();
-            const fileInp = document.getElementById('g-file');
-            if(fileInp.files[0]) {
-                const imgData = await window.fileToBase64(fileInp.files[0]);
-                window.appData.gallery.push({
-                    id: Date.now().toString(),
-                    title: document.getElementById('g-title').value,
-                    url: imgData
-                });
-                window.saveData();
-                e.target.reset();
-            }
-        };
-
-        window.addBlogPost = async function(e) {
-            e.preventDefault();
-            let imgData = 'https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?auto=format&fit=crop&w=500&q=80';
-            const fileInp = document.getElementById('b-file');
-            if(fileInp.files[0]) {
-                imgData = await window.fileToBase64(fileInp.files[0]);
-            }
-            const contentHTML = document.getElementById('b-editor').innerHTML;
-            window.appData.blog.push({
-                id: Date.now().toString(),
-                title: document.getElementById('b-title').value,
-                img: imgData,
-                content: contentHTML
-            });
-            window.saveData();
-            e.target.reset();
-            document.getElementById('b-editor').innerHTML = '';
-        };
-
-        window.addWaOption = function(e) {
-            e.preventDefault();
-            if(!window.appData.whatsapp.options) window.appData.whatsapp.options = [];
-            window.appData.whatsapp.options.push({
-                label: document.getElementById('wa-opt-label').value,
-                reply: document.getElementById('wa-opt-reply').value
-            });
-            window.saveData();
-            e.target.reset();
-        };
-
-        window.deleteWaOption = function(i) {
-            window.appData.whatsapp.options.splice(i, 1);
-            window.saveData();
-        };
-
+// ... existing code global ...
         window.saveSiteSettings = async function() {
+            if(!window.appData.brandLogos) window.appData.brandLogos = { marraflab: '', thunder: '' };
+
+            const marraFile = document.getElementById('cfg-logo-file');
+            const thunderFile = document.getElementById('cfg-thunder-file');
+            const marraUrl = document.getElementById('cfg-logo-url').value;
+            const thunderUrl = document.getElementById('cfg-thunder-url').value;
+
+            if (marraFile && marraFile.files[0]) {
+                window.appData.brandLogos.marraflab = await window.fileToBase64(marraFile.files[0]);
+            } else if (marraUrl) {
+                window.appData.brandLogos.marraflab = marraUrl;
+            }
+
+            if (thunderFile && thunderFile.files[0]) {
+                window.appData.brandLogos.thunder = await window.fileToBase64(thunderFile.files[0]);
+            } else if (thunderUrl) {
+                window.appData.brandLogos.thunder = thunderUrl;
+            }
+
             window.appData.seo = {
                 title: document.getElementById('cfg-seo-title').value,
                 description: document.getElementById('cfg-seo-desc').value,
                 keywords: document.getElementById('cfg-seo-keywords').value
             };
-            window.saveData();
-            alert("Configuración de SEO guardada.");
+            
+            await window.saveData();
+            alert("¡Configuración de Logo y SEO actualizada y aplicada con éxito!");
         };
 
         window.onload = function() {
