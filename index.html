@@ -56,37 +56,43 @@
 <body class="bg-slate-50 text-slate-800 antialiased flex flex-col min-h-screen">
 
     <!-- Top Bar Contacto -->
-    <div class="bg-marra-slate text-slate-300 text-xs py-2 px-4 border-b border-slate-800">
-        <div class="max-w-7xl mx-auto flex justify-between items-center">
-            <div class="flex items-center gap-4">
-                <span><i class="fas fa-phone text-marra-green mr-1"></i> +593 (2) 398 7654</span>
-                <span class="hidden md:inline"><i class="fas fa-envelope text-marra-orange mr-1"></i> ventas@marraflab.com</span>
-                <span class="hidden lg:inline"><i class="fas fa-vial text-thunder-blue mr-1"></i> Planta de Producción & Laboratorio</span>
+    <div class="bg-slate-950 text-slate-300 text-[11px] py-2 px-4 border-b border-slate-800/80">
+        <div class="max-w-7xl mx-auto flex justify-between items-center tracking-wide font-medium">
+            <div class="flex items-center gap-6">
+                <a href="tel:+59323987654" class="hover:text-marra-green transition flex items-center gap-1.5">
+                    <i class="fas fa-phone text-marra-green"></i> +593 (2) 398 7654
+                </a>
+                <a href="mailto:ventas@marraflab.com" class="hidden md:flex items-center gap-1.5 hover:text-marra-orange transition">
+                    <i class="fas fa-envelope text-marra-orange"></i> ventas@marraflab.com
+                </a>
+                <span class="hidden lg:flex items-center gap-1.5 text-slate-400">
+                    <i class="fas fa-vial text-thunder-blue"></i> Planta & Laboratorio Industrial
+                </span>
             </div>
             <div class="flex items-center gap-3">
-                <button onclick="openLoginModal()" class="bg-marra-green hover:bg-marra-darkgreen text-white px-3 py-1 rounded-md text-xs font-bold transition flex items-center gap-1.5 shadow-sm">
-                    <i class="fas fa-user-lock"></i> Acceso Backoffice
+                <button onclick="openLoginModal()" class="bg-slate-800 hover:bg-marra-green text-slate-200 hover:text-white px-3.5 py-1.5 rounded-lg text-[11px] font-semibold transition-all duration-200 flex items-center gap-2 border border-slate-700 shadow-sm">
+                    <i class="fas fa-user-lock text-marra-green group-hover:text-white"></i> Acceso Backoffice
                 </button>
             </div>
         </div>
     </div>
 
-    <!-- Header / Nav -->
-    <header class="sticky top-0 z-40 glass-nav border-b border-slate-200 shadow-sm">
+    <!-- Header / Nav Ejecutivo -->
+    <header class="sticky top-0 z-40 glass-nav border-b border-slate-200/80 shadow-sm transition-all duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-20 items-center">
+            <div class="flex justify-between h-20 items-center gap-4">
                 
-                <!-- BRAND LOGOS (MARRAFLAB & THUNDER) -->
-                <a href="#inicio" class="flex items-center gap-4">
+                <!-- BRAND LOGO MARRAFLAB + INSIGNIA THUNDER -->
+                <a href="#inicio" class="flex items-center gap-3 group shrink-0">
                     <div id="site-logo-container" class="flex items-center gap-3">
                         <!-- Logo MARRAFLAB Vectorizado -->
-                        <div class="flex items-center gap-2">
+                        <div class="flex items-center gap-2.5">
                             <div class="flex flex-col">
-                                <span class="text-2xl font-black text-slate-900 tracking-tight leading-none">MARRA<span class="text-marra-green">FLAB</span></span>
-                                <span class="text-[9px] font-extrabold text-slate-500 tracking-wider uppercase">PRODUCTOS QUÍMICOS S.A.S.</span>
+                                <span class="text-2xl font-black text-slate-950 tracking-tight leading-none group-hover:text-marra-darkgreen transition-colors">MARRA<span class="text-marra-green">FLAB</span></span>
+                                <span class="text-[8.5px] font-extrabold text-slate-500 tracking-wider uppercase mt-0.5">PRODUCTOS QUÍMICOS S.A.S.</span>
                             </div>
                             <!-- Molécula Química Icon -->
-                            <svg class="w-8 h-8" viewBox="0 0 100 100" fill="none">
+                            <svg class="w-8 h-8 transition-transform group-hover:rotate-12 duration-300" viewBox="0 0 100 100" fill="none">
                                 <polygon points="50,15 85,35 85,75 50,95 15,75 15,35" stroke="#78BE20" stroke-width="6" fill="none" />
                                 <circle cx="50" cy="15" r="8" fill="#FF6B00" />
                                 <circle cx="85" cy="35" r="8" fill="#FF6B00" />
@@ -98,46 +104,44 @@
                             </svg>
                         </div>
                         
-                        <!-- Separador -->
-                        <div class="h-8 w-px bg-slate-300 hidden sm:block"></div>
+                        <!-- Separador Vertical Discreto -->
+                        <div class="h-7 w-px bg-slate-200 hidden sm:block"></div>
 
-                        <!-- Logo Marca PRODUCTOS THUNDER -->
-                        <div id="thunder-logo-header" class="hidden sm:flex items-center bg-thunder-blue/10 px-3 py-1 rounded-xl border border-thunder-blue/30">
-                            <div class="bg-thunder-blue text-white p-1 rounded-lg mr-2">
-                                <i class="fas fa-bolt text-thunder-yellow text-xs"></i>
-                            </div>
-                            <div>
-                                <span class="text-[10px] font-extrabold text-thunder-blue block uppercase leading-none">PRODUCTOS</span>
-                                <span class="text-xs font-black text-thunder-darkblue block tracking-widest leading-none mt-0.5">THUNDER</span>
+                        <!-- Badge Marca Oficial PRODUCTOS THUNDER -->
+                        <div id="thunder-logo-header" class="hidden sm:flex items-center bg-slate-900 text-white px-3 py-1.5 rounded-xl border border-thunder-blue/40 shadow-sm hover:border-thunder-yellow transition-all duration-200">
+                            <i class="fas fa-bolt text-thunder-yellow text-xs mr-2 animate-pulse"></i>
+                            <div class="flex flex-col">
+                                <span class="text-[8px] font-black text-slate-400 leading-none uppercase tracking-widest">LÍNEA OFICIAL</span>
+                                <span class="text-[11px] font-black text-white leading-none tracking-wider mt-0.5">THUNDER</span>
                             </div>
                         </div>
                     </div>
                 </a>
 
-                <!-- Nav Desktop -->
-                <nav class="hidden xl:flex space-x-5 text-xs font-bold text-slate-700 uppercase tracking-wider">
-                    <a href="#inicio" class="hover:text-marra-green transition">Inicio</a>
-                    <a href="#nosotros" class="hover:text-marra-green transition">Nosotros</a>
-                    <a href="#servicios" class="hover:text-marra-green transition">Servicios</a>
-                    <a href="#productos" class="text-thunder-blue hover:text-marra-orange transition font-black flex items-center gap-1">
-                        <i class="fas fa-bolt text-thunder-yellow"></i> PRODUCTOS THUNDER
+                <!-- Nav Desktop Pulcro -->
+                <nav class="hidden xl:flex items-center space-x-7 text-xs font-semibold text-slate-700 tracking-wide">
+                    <a href="#inicio" class="relative py-2 transition hover:text-marra-green after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-marra-green hover:after:w-full after:transition-all">Inicio</a>
+                    <a href="#nosotros" class="relative py-2 transition hover:text-marra-green after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-marra-green hover:after:w-full after:transition-all">Nosotros</a>
+                    <a href="#servicios" class="relative py-2 transition hover:text-marra-green after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-marra-green hover:after:w-full after:transition-all">Servicios</a>
+                    <a href="#productos" class="relative py-2 text-thunder-darkblue font-bold hover:text-marra-orange flex items-center gap-1.5 after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-marra-orange hover:after:w-full after:transition-all">
+                        <i class="fas fa-bolt text-thunder-yellow text-xs"></i> Productos THUNDER
                     </a>
-                    <a href="#testimonios" class="hover:text-marra-green transition">Testimonios</a>
-                    <a href="#galeria" class="hover:text-marra-green transition">Galería</a>
-                    <a href="#blog" class="hover:text-marra-green transition">Blog</a>
-                    <a href="#contacto" class="hover:text-marra-green transition">Contacto</a>
+                    <a href="#testimonios" class="relative py-2 transition hover:text-marra-green after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-marra-green hover:after:w-full after:transition-all">Testimonios</a>
+                    <a href="#galeria" class="relative py-2 transition hover:text-marra-green after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-marra-green hover:after:w-full after:transition-all">Galería</a>
+                    <a href="#blog" class="relative py-2 transition hover:text-marra-green after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-marra-green hover:after:w-full after:transition-all">Blog</a>
+                    <a href="#contacto" class="relative py-2 transition hover:text-marra-green after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-marra-green hover:after:w-full after:transition-all">Contacto</a>
                 </nav>
 
-                <!-- CTA Header -->
-                <div class="hidden md:flex items-center gap-3">
-                    <a href="#contacto" class="bg-marra-orange hover:bg-marra-darkorange text-white font-bold px-5 py-2.5 rounded-xl shadow-md transition text-xs uppercase tracking-wider">
-                        Cotizar Insumos
+                <!-- CTA Header Estilizado -->
+                <div class="hidden lg:flex items-center shrink-0">
+                    <a href="#contacto" class="bg-gradient-to-r from-marra-orange to-marra-darkorange hover:from-marra-darkorange hover:to-orange-700 text-white font-bold px-5 py-2.5 rounded-xl shadow-md hover:shadow-lg transition-all duration-200 text-xs tracking-wider uppercase flex items-center gap-2 border border-orange-400/20">
+                        <i class="fas fa-file-invoice text-xs"></i> Cotizar Insumos
                     </a>
                 </div>
 
                 <!-- Mobile Menu Button -->
                 <div class="xl:hidden flex items-center">
-                    <button id="mobile-menu-btn" onclick="toggleMobileMenu()" class="text-slate-700 hover:text-marra-green p-2 text-2xl">
+                    <button id="mobile-menu-btn" onclick="toggleMobileMenu()" class="text-slate-700 hover:text-marra-green p-2 text-2xl focus:outline-none">
                         <i class="fas fa-bars"></i>
                     </button>
                 </div>
@@ -145,18 +149,25 @@
         </div>
 
         <!-- Menu Mobile Dropdown -->
-        <div id="mobile-menu" class="hidden xl:hidden bg-white border-b border-slate-200 px-4 pt-2 pb-4 space-y-2 text-xs font-bold uppercase tracking-wider">
-            <a href="#inicio" onclick="toggleMobileMenu()" class="block py-2 text-slate-700 hover:text-marra-green">Inicio</a>
-            <a href="#nosotros" onclick="toggleMobileMenu()" class="block py-2 text-slate-700 hover:text-marra-green">Nosotros</a>
-            <a href="#servicios" onclick="toggleMobileMenu()" class="block py-2 text-slate-700 hover:text-marra-green">Servicios</a>
-            <a href="#productos" onclick="toggleMobileMenu()" class="block py-2 text-thunder-blue font-black">PRODUCTOS THUNDER</a>
-            <a href="#testimonios" onclick="toggleMobileMenu()" class="block py-2 text-slate-700 hover:text-marra-green">Testimonios</a>
-            <a href="#galeria" onclick="toggleMobileMenu()" class="block py-2 text-slate-700 hover:text-marra-green">Galería</a>
-            <a href="#blog" onclick="toggleMobileMenu()" class="block py-2 text-slate-700 hover:text-marra-green">Blog</a>
-            <a href="#contacto" onclick="toggleMobileMenu()" class="block py-2 text-slate-700 hover:text-marra-green">Contacto</a>
-            <button onclick="openLoginModal(); toggleMobileMenu();" class="w-full text-left py-2 text-marra-green font-extrabold border-t border-slate-100 mt-2 pt-2">
-                <i class="fas fa-lock mr-1"></i> Acceso Backoffice
-            </button>
+        <div id="mobile-menu" class="hidden xl:hidden bg-white/98 backdrop-blur-md border-b border-slate-200 px-6 pt-3 pb-6 space-y-3 text-xs font-semibold text-slate-800">
+            <a href="#inicio" onclick="toggleMobileMenu()" class="block py-1.5 hover:text-marra-green transition">Inicio</a>
+            <a href="#nosotros" onclick="toggleMobileMenu()" class="block py-1.5 hover:text-marra-green transition">Nosotros</a>
+            <a href="#servicios" onclick="toggleMobileMenu()" class="block py-1.5 hover:text-marra-green transition">Servicios</a>
+            <a href="#productos" onclick="toggleMobileMenu()" class="block py-1.5 text-thunder-darkblue font-extrabold flex items-center gap-1.5">
+                <i class="fas fa-bolt text-thunder-yellow"></i> Productos THUNDER
+            </a>
+            <a href="#testimonios" onclick="toggleMobileMenu()" class="block py-1.5 hover:text-marra-green transition">Testimonios</a>
+            <a href="#galeria" onclick="toggleMobileMenu()" class="block py-1.5 hover:text-marra-green transition">Galería</a>
+            <a href="#blog" onclick="toggleMobileMenu()" class="block py-1.5 hover:text-marra-green transition">Blog</a>
+            <a href="#contacto" onclick="toggleMobileMenu()" class="block py-1.5 hover:text-marra-green transition">Contacto</a>
+            <div class="pt-3 border-t border-slate-100 flex flex-col gap-2">
+                <a href="#contacto" onclick="toggleMobileMenu()" class="bg-marra-orange text-white text-center font-bold py-2.5 rounded-xl text-xs uppercase tracking-wider">
+                    Cotizar Insumos
+                </a>
+                <button onclick="openLoginModal(); toggleMobileMenu();" class="text-left text-xs font-bold text-slate-500 hover:text-marra-green py-1 flex items-center gap-1.5">
+                    <i class="fas fa-user-lock text-marra-green"></i> Acceso Backoffice
+                </button>
+            </div>
         </div>
     </header>
 
