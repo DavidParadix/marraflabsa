@@ -25,4 +25,4 @@ jobs:
       - name: Desplegar todo a Firebase
         run: firebase deploy --only firestore:rules,storage,functions
         env:
-          GOOGLE_APPLICATION_CREDENTIALS_JSON: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_MARRAFLABSA }}
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_MARRAFLABSA }}
