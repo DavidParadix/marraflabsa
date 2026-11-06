@@ -51,6 +51,11 @@
         .thunder-badge { background: linear-gradient(135deg, #008CC9 0%, #FFC700 100%); }
         .editor-content { min-height: 140px; }
         .editor-content:focus { outline: none; }
+        [hidden] { display: none !important; }
+        button, a, input, textarea, select { -webkit-tap-highlight-color: transparent; }
+        button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible { outline: 3px solid rgba(120,190,32,.45); outline-offset: 2px; }
+        img { max-width: 100%; }
+        @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; } }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800 antialiased flex flex-col min-h-screen">
@@ -423,7 +428,7 @@
                         <div class="space-y-2">
                             <span class="text-slate-700 text-xs font-bold block"><i class="fas fa-location-dot text-marra-orange mr-1"></i> Ubicación en Google Maps:</span>
                             <div class="rounded-2xl overflow-hidden shadow-md h-60 border border-slate-300">
-                                <iframe class="w-full h-full border-0" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.790082729352!2d-78.481!3d-0.18!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zM8KwMT'OC4wIlMgNz electrolysis!5e0!3m2!1ses!2sec!4v1620000000000!5m2!1ses!2sec" allowfullscreen="" loading="lazy"></iframe>
+                                <iframe title="Ubicación de MARRAFLAB en Google Maps" class="w-full h-full border-0" src="https://www.google.com/maps?q=Parque%20Industrial%2C%20Ecuador&output=embed" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                             </div>
                         </div>
                     </div>
@@ -567,8 +572,8 @@
             <button onclick="closeLoginModal()" class="absolute top-4 right-4 text-slate-400"><i class="fas fa-times"></i></button>
             <h3 class="text-lg font-bold text-center mb-4">Acceso al Backoffice</h3>
             <form onsubmit="handleLogin(event)" class="space-y-4 text-xs">
-                <input type="text" id="login-user" required placeholder="Usuario" value="admin" class="w-full p-3 bg-slate-800 border border-slate-700 rounded-lg text-white">
-                <input type="password" id="login-pass" required placeholder="Contraseña" value="admin123" class="w-full p-3 bg-slate-800 border border-slate-700 rounded-lg text-white">
+                <input type="email" id="login-user" required placeholder="Correo electrónico" autocomplete="username" class="w-full p-3 bg-slate-800 border border-slate-700 rounded-lg text-white">
+                <input type="password" id="login-pass" required placeholder="Contraseña" autocomplete="current-password" class="w-full p-3 bg-slate-800 border border-slate-700 rounded-lg text-white">
                 <div id="login-error" class="hidden text-red-400 text-xs text-center font-bold">Credenciales incorrectas.</div>
                 <button type="submit" class="w-full bg-marra-green text-white font-bold py-3 rounded-xl uppercase">Ingresar</button>
             </form>
@@ -587,8 +592,11 @@
     <div id="backoffice-modal" class="hidden fixed inset-0 z-50 bg-slate-950/90 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto">
         <div class="bg-slate-900 text-white rounded-2xl max-w-5xl w-full border border-slate-800 flex flex-col my-8 max-h-[90vh]">
             <div class="bg-slate-950 p-4 border-b border-slate-800 flex justify-between items-center">
-                <span class="text-lg font-black">Panel Administrador MARRAFLAB</span>
-                <div class="flex items-center gap-3">
+                <div class="min-w-0">
+                    <span class="text-lg font-black block">Panel Administrador MARRAFLAB</span>
+                    <span id="admin-save-status" class="text-[10px] text-slate-400" role="status" aria-live="polite">Sistema listo para trabajar</span>
+                </div>
+                <div class="flex items-center gap-3 shrink-0">
                     <button onclick="logoutAdmin()" class="text-xs text-red-400 font-bold"><i class="fas fa-sign-out-alt"></i> Salir</button>
                     <button onclick="toggleBackofficeModal()" class="text-slate-400"><i class="fas fa-times"></i></button>
                 </div>
@@ -603,18 +611,20 @@
                 <button id="tab-btn-gallery" onclick="switchAdminTab('gallery')" class="admin-tab-btn text-slate-400 px-3.5 py-2 rounded-lg font-bold shrink-0">Galería</button>
                 <button id="tab-btn-blog" onclick="switchAdminTab('blog')" class="admin-tab-btn text-slate-400 px-3.5 py-2 rounded-lg font-bold shrink-0">Blog Word</button>
                 <button id="tab-btn-settings" onclick="switchAdminTab('settings')" class="admin-tab-btn text-slate-400 px-3.5 py-2 rounded-lg font-bold shrink-0">Logos & SEO</button>
+                <button id="tab-btn-activity" onclick="switchAdminTab('activity')" class="admin-tab-btn text-slate-400 px-3.5 py-2 rounded-lg font-bold shrink-0">Actividad</button>
             </div>
 
             <div class="p-6 overflow-y-auto flex-grow space-y-6">
                 <!-- TAB USUARIOS -->
                 <div id="admin-users" class="admin-content space-y-4">
                     <h4 class="text-lg font-bold">Gestión de Usuarios</h4>
+                    <p class="text-xs text-slate-400">Crea cuentas seguras mediante Firebase Authentication. Los permisos se administran por rol y nunca se guardan contraseñas en la base pública.</p>
                     <div class="grid sm:grid-cols-3 gap-3 text-xs">
                         <input type="text" id="usr-name" placeholder="Nombre completo" class="p-2.5 bg-slate-800 border border-slate-700 rounded-lg text-white">
-                        <input type="text" id="usr-email" placeholder="Usuario / Email" class="p-2.5 bg-slate-800 border border-slate-700 rounded-lg text-white">
-                        <input type="password" id="usr-pass" placeholder="Contraseña" class="p-2.5 bg-slate-800 border border-slate-700 rounded-lg text-white">
+                        <input type="email" id="usr-email" placeholder="Correo electrónico" class="p-2.5 bg-slate-800 border border-slate-700 rounded-lg text-white">
+                        <select id="usr-role" class="p-2.5 bg-slate-800 border border-slate-700 rounded-lg text-white"><option value="Editor">Editor</option><option value="Administrador">Administrador</option></select>
                     </div>
-                    <button onclick="addUser()" class="bg-marra-green text-white font-bold px-4 py-2 rounded-lg text-xs">Añadir Usuario</button>
+                    <button onclick="addUser()" class="bg-marra-green text-white font-bold px-4 py-2 rounded-lg text-xs">Crear cuenta y enviar acceso</button>
                     <div id="users-table-container"></div>
                 </div>
 
@@ -746,6 +756,12 @@
                     <div id="blog-table-container"></div>
                 </div>
 
+                <!-- TAB ACTIVIDAD -->
+                <div id="admin-activity" class="admin-content space-y-4 hidden">
+                    <div class="flex items-center justify-between gap-3"><div><h4 class="text-lg font-bold">Registro de actividad</h4><p class="text-xs text-slate-400">Historial de cambios realizados por los usuarios del panel.</p></div><button onclick="loadActivity()" class="bg-slate-700 px-3 py-2 rounded-lg text-xs font-bold">Actualizar</button></div>
+                    <div id="activity-table-container"></div>
+                </div>
+
                 <!-- TAB LOGOS & SEO -->
                 <div id="admin-settings" class="admin-content space-y-6 hidden">
                     <h4 class="text-xl font-bold text-white">Logos & SEO</h4>
@@ -774,11 +790,23 @@
         </div>
     </div>
 
-    <!-- FIREBASE SDK V13 INTEGRACIÓN COMPLETA -->
+    <div id="record-edit-modal" class="hidden fixed inset-0 z-[80] bg-slate-950/80 backdrop-blur-sm items-center justify-center p-4">
+        <div class="bg-slate-900 text-white rounded-2xl border border-slate-700 max-w-xl w-full max-h-[90vh] overflow-y-auto p-6">
+            <div class="flex justify-between items-center mb-4"><h3 id="record-edit-title" class="font-black text-lg">Editar registro</h3><button type="button" onclick="closeRecordEditor()" class="text-slate-400 text-xl" aria-label="Cerrar">&times;</button></div>
+            <form id="record-edit-form" class="space-y-3" onsubmit="saveRecordEdit(event)"><div id="record-edit-fields" class="space-y-3"></div><div class="flex justify-end gap-2 pt-3"><button type="button" onclick="closeRecordEditor()" class="px-4 py-2 rounded-lg bg-slate-700 text-xs font-bold">Cancelar</button><button type="submit" class="px-4 py-2 rounded-lg bg-marra-green text-xs font-bold">Guardar cambios</button></div></form>
+        </div>
+    </div>
+
+    <!-- FIREBASE + APLICACIÓN -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/13.2.0/firebase-app.js";
-        import { getAuth } from "https://www.gstatic.com/firebasejs/13.2.0/firebase-auth.js";
-        import { getFirestore, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/13.2.0/firebase-firestore.js";
+        import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/13.2.0/firebase-auth.js";
+        import { getFunctions, httpsCallable } from "https://www.gstatic.com/firebasejs/13.2.0/firebase-functions.js";
+        import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/13.2.0/firebase-storage.js";
+        import {
+            getFirestore, doc, getDoc, setDoc, onSnapshot, collection, getDocs,
+            addDoc, serverTimestamp, query, orderBy, limit
+        } from "https://www.gstatic.com/firebasejs/13.2.0/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyBbiUQlpd_wWyofSmLJaKZN4AnFQYjCZAo",
@@ -790,534 +818,684 @@
             measurementId: "G-RVLYV5FJEV"
         };
 
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getFirestore(app);
-
-        window.fileToBase64 = file => new Promise((resolve, reject) => {
-            const reader = new FileReader();
-            reader.readAsDataURL(file);
-            reader.onload = () => resolve(reader.result);
-            reader.onerror = error => reject(error);
-        });
+        const STORAGE_KEY = "marraflab_site_v2";
+        const DB_PATH = ["public", "marraflabDB"];
 
         const defaultState = {
-            brandLogos: { marraflab: '', thunder: '' },
+            brandLogos: { marraflab: "", thunder: "" },
             seo: {
-                title: 'MARRAFLAB Productos Químicos S.A.S. | PRODUCTOS THUNDER',
-                description: 'Líderes en fabricación de insumos químicos industriales y la línea de desinfección y limpieza profesional PRODUCTOS THUNDER.',
-                keywords: 'productos quimicos, desinfectantes industriales, productos thunder, marraflab'
+                title: "MARRAFLAB Productos Químicos S.A.S. | PRODUCTOS THUNDER",
+                description: "Fabricación y comercialización de insumos químicos y soluciones de limpieza profesional PRODUCTOS THUNDER.",
+                keywords: "productos químicos, desinfectantes industriales, productos thunder, marraflab"
             },
             services: [
-                { id: '1', title: 'Desinfección Nivel Hospitalario', icon: 'fa-pump-medical', desc: 'Formulación de amonio cuaternario para inocuidad clínica.' },
-                { id: '2', title: 'Detergentes e Higiene Industrial', icon: 'fa-industry', desc: 'Desengrasantes biodegradables para agroindustrias.' }
+                { id: "srv-1", title: "Desinfección de nivel hospitalario", icon: "fa-pump-medical", desc: "Soluciones para procesos profesionales de limpieza e higienización." },
+                { id: "srv-2", title: "Detergentes e higiene industrial", icon: "fa-industry", desc: "Productos para limpieza de instalaciones y superficies industriales." }
             ],
             products: [
-                { id: '1', title: 'THUNDER Desinfectante Amonio 5L', category: 'Desinfectantes', price: '18.50', icon: 'fa-bolt', img: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=500&q=80', desc: 'Elimina el 99.9% de bacterias e higieniza áreas.' }
+                { id: "prd-1", title: "THUNDER Desinfectante Amonio 5L", category: "Desinfectantes", price: "18.50", icon: "fa-bolt", img: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=500&q=80", desc: "Solución para limpieza e higienización profesional. Consulte ficha técnica y modo de uso." }
             ],
             testimonials: [
-                { id: '1', author: 'Ing. Marcelo Viteri', role: 'Gerente de Planta', rating: '5', text: 'Excelente rendimiento de PRODUCTOS THUNDER.' }
+                { id: "tst-1", author: "Cliente institucional", role: "Cliente", rating: "5", text: "Conozca las experiencias de nuestros clientes." }
             ],
             gallery: [],
             blog: [],
-            users: [
-                { id: '1', name: 'Administrador Principal', email: 'admin', pass: 'admin123', role: 'Administrador' }
-            ],
             whatsapp: {
-                phone: '593998765432',
-                msg: 'Hola MARRAFLAB, requiero cotización de PRODUCTOS THUNDER.',
+                phone: "593998765432",
+                msg: "Hola MARRAFLAB, requiero información de PRODUCTOS THUNDER.",
                 options: [
-                    { label: 'Ver Precios THUNDER', reply: 'Deseo conocer la lista de precios THUNDER.' }
+                    { id: "wa-1", label: "Consultar precios", reply: "Deseo conocer la lista de precios de PRODUCTOS THUNDER." },
+                    { id: "wa-2", label: "Solicitar ficha técnica", reply: "Deseo solicitar fichas técnicas de sus productos." }
                 ]
             }
         };
 
-        window.appData = { ...defaultState };
+        let db = null;
+        let auth = null;
+        let functions = null;
+        let storage = null;
+        let unsubscribe = null;
+        let saving = false;
+        let remoteReady = false;
+        let currentUser = null;
+        let currentRole = null;
+        let currentProfile = null;
+        let pendingActivity = null;
+        let lastCommittedState = null;
+        let editingRecord = null;
 
-        window.saveData = async function() {
-            try {
-                const docRef = doc(db, 'public', 'marraflabDB');
-                await setDoc(docRef, window.appData);
-            } catch(e) { console.error("Fallback almacenamiento local", e); }
-            renderAll();
+        const clone = value => JSON.parse(JSON.stringify(value));
+        const $ = id => document.getElementById(id);
+        const safe = value => String(value ?? "").replace(/[&<>"']/g, char => ({
+            "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+        }[char]));
+        const makeId = prefix => `${prefix}-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
+
+        function normalizeState(data) {
+            const base = clone(defaultState);
+            const merged = { ...base, ...(data || {}) };
+            merged.brandLogos = { ...base.brandLogos, ...(data?.brandLogos || {}) };
+            merged.seo = { ...base.seo, ...(data?.seo || {}) };
+            merged.whatsapp = { ...base.whatsapp, ...(data?.whatsapp || {}) };
+            ["services", "products", "testimonials", "gallery", "blog"].forEach(key => {
+                if (!Array.isArray(merged[key])) merged[key] = clone(base[key]);
+            });
+            if (!Array.isArray(merged.whatsapp.options)) merged.whatsapp.options = [];
+            delete merged.users;
+            return merged;
+        }
+
+        window.appData = normalizeState({});
+        window.fileToBase64 = async file => {
+            if (!file) return "";
+            if (!file.type.startsWith("image/")) throw new Error("Selecciona un archivo de imagen válido.");
+            if (file.size > 5 * 1024 * 1024) throw new Error("La imagen supera 5 MB. Reduce su tamaño antes de subirla.");
+            if (!storage || !currentUser) throw new Error("Debes iniciar sesión para subir imágenes.");
+            const cleanName = file.name.replace(/[^a-zA-Z0-9._-]/g, "_").slice(-80);
+            const path = `site-assets/${currentUser.uid}/${Date.now()}-${cleanName}`;
+            const target = storageRef(storage, path);
+            await uploadBytes(target, file, { contentType: file.type });
+            return await getDownloadURL(target);
         };
 
-        window.renderAll = function() {
-            // Logos
-            if(window.appData.brandLogos && window.appData.brandLogos.marraflab) {
-                const logoCont = document.getElementById('site-logo-container');
-                if(logoCont) {
-                    logoCont.innerHTML = `<img src="${window.appData.brandLogos.marraflab}" class="h-10 object-contain">`;
+        function setAdminSaveStatus(message, type = "normal") {
+            const status = $("admin-save-status");
+            if (!status) return;
+            status.textContent = message;
+            status.className = "text-[10px] " + (
+                type === "success" ? "text-emerald-400" :
+                type === "error" ? "text-red-400" :
+                type === "warning" ? "text-amber-300" : "text-slate-400"
+            );
+        }
+
+        function showNotice(message, type = "success") {
+            let node = $("app-notice");
+            if (!node) {
+                node = document.createElement("div");
+                node.id = "app-notice";
+                node.setAttribute("role", type === "error" ? "alert" : "status");
+                node.setAttribute("aria-live", type === "error" ? "assertive" : "polite");
+                node.className = "fixed top-24 right-4 z-[100] max-w-sm rounded-xl px-4 py-3 text-sm font-semibold shadow-xl flex items-start gap-3";
+                document.body.appendChild(node);
+            }
+            const styles = {
+                success: "bg-emerald-600 text-white",
+                error: "bg-red-600 text-white",
+                warning: "bg-amber-400 text-slate-950",
+                info: "bg-slate-800 text-white"
+            };
+            const icons = { success: "fa-check-circle", error: "fa-circle-exclamation", warning: "fa-triangle-exclamation", info: "fa-circle-info" };
+            node.className = `fixed top-24 right-4 z-[100] max-w-sm rounded-xl px-4 py-3 text-sm font-semibold shadow-xl flex items-start gap-3 ${styles[type] || styles.success}`;
+            node.setAttribute("role", type === "error" ? "alert" : "status");
+            node.innerHTML = `<i class="fas ${icons[type] || icons.success} mt-0.5" aria-hidden="true"></i><span class="leading-relaxed">${safe(message)}</span><button type="button" class="ml-2 opacity-80 hover:opacity-100" aria-label="Cerrar notificación"><i class="fas fa-times"></i></button>`;
+            node.querySelector("button").addEventListener("click", () => node.remove());
+            clearTimeout(window.noticeTimer);
+            window.noticeTimer = setTimeout(() => node.remove(), 4500);
+        }
+
+        function persistLocal() {
+            try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(window.appData));
+                return true;
+            } catch (error) {
+                console.error("No se pudo guardar en este navegador:", error);
+                showNotice("No se pudo guardar localmente. Revisa el espacio disponible.", "error");
+                return false;
+            }
+        }
+
+        async function initializeFirebase() {
+            try {
+                const app = initializeApp(firebaseConfig);
+                db = getFirestore(app);
+                storage = getStorage(app);
+                auth = getAuth(app);
+                functions = getFunctions(app, "us-central1");
+                const ref = doc(db, ...DB_PATH);
+                const snapshot = await getDoc(ref);
+                if (snapshot.exists()) window.appData = normalizeState(snapshot.data());
+                else window.appData = normalizeState({});
+                lastCommittedState = clone(window.appData);
+                remoteReady = true;
+                persistLocal();
+                renderAll();
+                unsubscribe = onSnapshot(ref, snapshot => {
+                    if (snapshot.exists() && !saving) {
+                        window.appData = normalizeState(snapshot.data());
+                        lastCommittedState = clone(window.appData);
+                        persistLocal(); renderAll();
+                    }
+                }, error => {
+                    console.warn("Sincronización Firestore:", error);
+                    setAdminSaveStatus("Sincronización interrumpida", "error");
+                });
+                onAuthStateChanged(auth, async user => {
+                    currentUser = user || null;
+                    currentRole = null; currentProfile = null; window.loggedIn = false;
+                    if (user) {
+                        try {
+                            const profileSnap = await getDoc(doc(db, "userRoles", user.uid));
+                            if (!profileSnap.exists() || profileSnap.data().active === false) {
+                                await signOut(auth);
+                                showNotice("Tu cuenta no tiene permisos activos para el panel.", "error");
+                                return;
+                            }
+                            currentProfile = profileSnap.data();
+                            currentRole = currentProfile.role;
+                            window.loggedIn = ["Administrador", "Editor"].includes(currentRole);
+                            if (window.loggedIn) {
+                                closeLoginModal();
+                                $("backoffice-modal")?.classList.remove("hidden");
+                                applyPermissions();
+                                switchAdminTab(currentRole === "Administrador" ? "users" : "services");
+                                setAdminSaveStatus(`Sesión activa: ${currentProfile.name || user.email} · ${currentRole}`, "success");
+                                loadActivity();
+                                if (currentRole === "Administrador") loadManagedUsers();
+                            }
+                        } catch (e) {
+                            console.error(e); await signOut(auth);
+                            showNotice("No se pudieron verificar tus permisos. Contacta al administrador.", "error");
+                        }
+                    } else {
+                        $("backoffice-modal")?.classList.add("hidden");
+                    }
+                });
+            } catch (error) {
+                console.error("Firebase no disponible:", error);
+                const cached = localStorage.getItem(STORAGE_KEY);
+                if (cached) { try { window.appData = normalizeState(JSON.parse(cached)); } catch (_) {} }
+                renderAll();
+                showNotice("No se pudo conectar con Firebase. El panel administrativo permanecerá bloqueado.", "error");
+            }
+        }
+
+        async function writeActivity(action, section, details, itemId = "") {
+            if (!currentUser || !currentRole || !db) return;
+            await addDoc(collection(db, "activity"), {
+                actorUid: currentUser.uid, actorName: currentProfile?.name || currentUser.email,
+                actorEmail: currentUser.email, role: currentRole, action, section,
+                details: String(details || "").slice(0, 500), itemId: String(itemId || ""),
+                createdAt: serverTimestamp()
+            });
+        }
+
+        window.saveData = async function () {
+            if (!currentUser || !["Administrador", "Editor"].includes(currentRole)) {
+                showNotice("Inicia sesión con una cuenta autorizada para guardar cambios.", "error");
+                return false;
+            }
+            if (currentRole === "Editor" && pendingActivity?.section === "Configuración") {
+                showNotice("Tu rol no permite modificar la configuración general.", "error"); return false;
+            }
+            if (saving) { showNotice("Hay otro guardado en proceso. Espera un momento.", "warning"); return false; }
+            const cleanData = normalizeState(window.appData);
+            try {
+                saving = true;
+                setAdminSaveStatus("Guardando cambios en Firebase…", "warning");
+                await setDoc(doc(db, ...DB_PATH), cleanData);
+                window.appData = cleanData;
+                lastCommittedState = clone(cleanData);
+                persistLocal();
+                let auditWarning = false;
+                if (pendingActivity) {
+                    try { await writeActivity(pendingActivity.action, pendingActivity.section, pendingActivity.details, pendingActivity.itemId); }
+                    catch (auditError) { console.error("No se pudo registrar la actividad:", auditError); auditWarning = true; }
                 }
+                const savedAt = new Date().toLocaleTimeString("es-EC", { hour: "2-digit", minute: "2-digit" });
+                setAdminSaveStatus(`Último guardado: ${savedAt} · Sincronizado`, auditWarning ? "warning" : "success");
+                showNotice(auditWarning ? "Los cambios se guardaron, pero no se pudo registrar la actividad." : (pendingActivity?.successMessage || "Los cambios se guardaron correctamente."), auditWarning ? "warning" : "success");
+                pendingActivity = null;
+                renderAll();
+                return true;
+            } catch (error) {
+                console.error("Error guardando:", error);
+                if (lastCommittedState) { window.appData = clone(lastCommittedState); persistLocal(); renderAll(); }
+                setAdminSaveStatus("Error al guardar en la nube", "error");
+                showNotice("No se pudieron guardar los cambios en Firebase. Se restauraron los últimos datos confirmados; revisa conexión y reglas.", "error");
+                pendingActivity = null;
+                return false;
+            } finally { saving = false; }
+        };
+
+        function canManage(section) {
+            if (!currentUser) return false;
+            if (currentRole === "Administrador") return true;
+            return currentRole === "Editor" && ["Servicios", "Productos", "Testimonios", "Galería", "Blog", "WhatsApp"].includes(section);
+        }
+        function applyPermissions() {
+            const adminOnly = ["users", "settings"];
+            adminOnly.forEach(tab => { const b = $("tab-btn-" + tab); if (b) b.classList.toggle("hidden", currentRole !== "Administrador"); });
+            const activity = $("tab-btn-activity"); if (activity) activity.classList.remove("hidden");
+            const label = $("admin-save-status");
+            if (label && currentProfile) label.textContent = `${currentProfile.name || currentUser.email} · ${currentRole}`;
+        }
+
+        function cleanRichText(html) {
+            const parsed = new DOMParser().parseFromString(String(html || ""), "text/html");
+            parsed.querySelectorAll("script,style,iframe,object,embed,form").forEach(el => el.remove());
+            parsed.body.querySelectorAll("*").forEach(el => {
+                [...el.attributes].forEach(attr => {
+                    if (attr.name.startsWith("on") || (["href", "src"].includes(attr.name) && /^\s*javascript:/i.test(attr.value))) {
+                        el.removeAttribute(attr.name);
+                    }
+                });
+            });
+            return parsed.body.innerHTML;
+        }
+
+        function renderAll() {
+            const data = window.appData;
+            const logo = $("site-logo-container");
+            if (logo && data.brandLogos.marraflab) {
+                logo.innerHTML = `<img src="${safe(data.brandLogos.marraflab)}" alt="MARRAFLAB" class="h-10 max-w-[190px] object-contain">`;
+            }
+            if ($("footer-logo-container") && data.brandLogos.thunder) {
+                $("footer-logo-container").innerHTML = `<img src="${safe(data.brandLogos.thunder)}" alt="PRODUCTOS THUNDER" class="h-10 max-w-[190px] object-contain">`;
             }
 
-            // SEO
-            if(window.appData.seo) {
-                document.title = window.appData.seo.title;
-                const mD = document.getElementById('seo-meta-desc');
-                if(mD) mD.content = window.appData.seo.description;
-                const mK = document.getElementById('seo-meta-keywords');
-                if(mK) mK.content = window.appData.seo.keywords;
-            }
+            document.title = data.seo.title || defaultState.seo.title;
+            if ($("seo-meta-desc")) $("seo-meta-desc").content = data.seo.description || "";
+            if ($("seo-meta-keywords")) $("seo-meta-keywords").content = data.seo.keywords || "";
+            if ($("seo-og-title")) $("seo-og-title").content = data.seo.title || "";
 
-            // Servicios
-            const sGrid = document.getElementById('services-grid');
-            if(sGrid) {
-                sGrid.innerHTML = window.appData.services.map(s => `
-                    <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200">
-                        <div class="w-12 h-12 bg-emerald-100 text-marra-green rounded-xl flex items-center justify-center text-xl mb-4">
-                            <i class="fas ${s.icon || 'fa-flask'}"></i>
+            const services = $("services-grid");
+            if (services) services.innerHTML = data.services.map(item => `
+                <article class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200">
+                    <div class="w-12 h-12 bg-emerald-100 text-marra-green rounded-xl flex items-center justify-center text-xl mb-4"><i class="fas ${safe(item.icon || "fa-flask")}"></i></div>
+                    <h3 class="text-lg font-black text-slate-900 mb-2">${safe(item.title)}</h3>
+                    <p class="text-slate-600 text-xs mb-4">${safe(item.desc)}</p>
+                    <button onclick="navigateTo('contacto')" class="text-marra-green font-bold text-xs hover:underline">Solicitar información →</button>
+                </article>`).join("") || '<p class="col-span-full text-center text-slate-500">Próximamente publicaremos nuestros servicios.</p>';
+
+            const products = $("products-grid");
+            if (products) products.innerHTML = data.products.map(item => `
+                <article class="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm flex flex-col">
+                    <img src="${safe(item.img)}" alt="${safe(item.title)}" loading="lazy" class="h-44 w-full object-cover" onerror="this.src='https://placehold.co/600x400?text=PRODUCTOS+THUNDER'">
+                    <div class="p-5 flex-grow flex flex-col justify-between">
+                        <div><span class="text-[10px] font-bold text-marra-orange uppercase tracking-wider block mb-1">${safe(item.category)}</span>
+                        <h3 class="font-black text-slate-900 text-sm">${safe(item.title)}</h3>
+                        <p class="text-xs text-slate-500 mt-2">${safe(item.desc)}</p></div>
+                        <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between gap-2">
+                            <span class="text-base font-black text-slate-900">${item.price ? "$" + safe(item.price) : "Consultar"}</span>
+                            <button onclick="openProductModal('${safe(item.id)}')" class="bg-thunder-blue text-white px-3 py-2 rounded-lg text-xs font-bold">Ver producto</button>
                         </div>
-                        <h3 class="text-lg font-black text-slate-900 mb-2">${s.title}</h3>
-                        <p class="text-slate-600 text-xs mb-4">${s.desc}</p>
-                        <button onclick="navigateTo('contacto')" class="text-marra-green font-bold text-xs hover:underline">Solicitar Cotización &rarr;</button>
                     </div>
-                `).join('');
-            }
+                </article>`).join("") || '<p class="col-span-full text-center text-slate-500">Estamos actualizando nuestro catálogo.</p>';
 
-            // Productos
-            const pGrid = document.getElementById('products-grid');
-            if(pGrid) {
-                pGrid.innerHTML = window.appData.products.map(p => `
-                    <div class="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm flex flex-col">
-                        <img src="${p.img}" class="h-44 w-full object-cover">
-                        <div class="p-5 flex-grow flex flex-col justify-between">
-                            <div>
-                                <span class="text-[10px] font-bold text-marra-orange uppercase tracking-wider block mb-1">${p.category}</span>
-                                <h4 class="font-black text-slate-900 text-sm">${p.title}</h4>
-                                <p class="text-xs text-slate-500 mt-2">${p.desc}</p>
-                            </div>
-                            <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
-                                <span class="text-base font-black text-slate-900">$${p.price}</span>
-                                <button onclick="openProductModal('${p.id}')" class="bg-thunder-blue text-white px-3 py-1.5 rounded-lg text-xs font-bold">Ficha Técnica</button>
-                            </div>
-                        </div>
-                    </div>
-                `).join('');
-            }
+            const testimonials = $("testimonials-grid");
+            if (testimonials) testimonials.innerHTML = data.testimonials.map(item => `
+                <article class="bg-slate-800 p-6 rounded-2xl border border-slate-700">
+                    <div class="text-thunder-yellow text-xs mb-3" aria-label="${safe(item.rating)} de 5 estrellas">${"★".repeat(Math.min(5, Math.max(0, Number(item.rating) || 0)))}</div>
+                    <p class="text-slate-300 text-xs italic">“${safe(item.text)}”</p>
+                    <div class="mt-4 pt-3 border-t border-slate-700"><h5 class="font-bold text-white text-xs">${safe(item.author)}</h5><span class="text-[10px] text-slate-400">${safe(item.role)}</span></div>
+                </article>`).join("") || '<p class="col-span-full text-center text-slate-400">Aún no hay testimonios publicados.</p>';
 
-            // Testimonios
-            const tGrid = document.getElementById('testimonios-grid');
-            if(tGrid) {
-                tGrid.innerHTML = window.appData.testimonials.map(t => `
-                    <div class="bg-slate-800 p-6 rounded-2xl border border-slate-700">
-                        <div class="text-thunder-yellow text-xs mb-3">${'★'.repeat(parseInt(t.rating))}</div>
-                        <p class="text-slate-300 text-xs italic">"${t.text}"</p>
-                        <div class="mt-4 pt-3 border-t border-slate-700">
-                            <h5 class="font-bold text-white text-xs">${t.author}</h5>
-                            <span class="text-[10px] text-slate-400">${t.role}</span>
-                        </div>
-                    </div>
-                `).join('');
-            }
+            const gallery = $("gallery-grid");
+            if (gallery) gallery.innerHTML = data.gallery.map(item => `
+                <figure class="relative group rounded-xl overflow-hidden h-48 border border-slate-200">
+                    <img src="${safe(item.url)}" alt="${safe(item.title)}" loading="lazy" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/600x400?text=MARRAFLAB'">
+                    <figcaption class="absolute inset-x-0 bottom-0 bg-slate-900/70 p-3 text-white font-bold text-xs">${safe(item.title)}</figcaption>
+                </figure>`).join("") || '<p class="col-span-full text-center text-slate-500">La galería se actualizará próximamente.</p>';
 
-            // Galería
-            const gGrid = document.getElementById('gallery-grid');
-            if(gGrid) {
-                gGrid.innerHTML = window.appData.gallery.map(g => `
-                    <div class="relative group rounded-xl overflow-hidden h-48 border border-slate-200">
-                        <img src="${g.url}" class="w-full h-full object-cover">
-                        <div class="absolute inset-0 bg-slate-900/60 flex items-end p-3">
-                            <span class="text-white font-bold text-xs">${g.title}</span>
-                        </div>
-                    </div>
-                `).join('');
-            }
+            const blog = $("blog-grid");
+            if (blog) blog.innerHTML = data.blog.map((item, index) => `
+                <article class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm">
+                    <img src="${safe(item.img)}" alt="${safe(item.title)}" loading="lazy" class="h-40 w-full object-cover">
+                    <div class="p-5"><h3 class="font-bold text-slate-900 text-sm mb-2">${safe(item.title)}</h3>
+                    <div class="text-slate-600 text-xs line-clamp-3 mb-3">${cleanRichText(item.content)}</div>
+                    <button onclick="openBlogModal(${index})" class="text-marra-green font-bold text-xs hover:underline">Leer artículo completo →</button></div>
+                </article>`).join("") || '<p class="col-span-full text-center text-slate-500">Próximamente publicaremos artículos técnicos.</p>';
 
-            // Blog
-            const bGrid = document.getElementById('blog-grid');
-            if(bGrid) {
-                bGrid.innerHTML = window.appData.blog.map((b, idx) => `
-                    <article class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm">
-                        <img src="${b.img}" class="h-40 w-full object-cover">
-                        <div class="p-5">
-                            <h3 class="font-bold text-slate-900 text-sm mb-2">${b.title}</h3>
-                            <div class="text-slate-600 text-xs line-clamp-3 mb-3">${b.content}</div>
-                            <button onclick="openBlogModal(${idx})" class="text-marra-green font-bold text-xs hover:underline">Leer entrada completa &rarr;</button>
-                        </div>
-                    </article>
-                `).join('');
-            }
+            const waOptions = $("wa-options-container");
+            if (waOptions) waOptions.innerHTML = data.whatsapp.options.map((item, index) => `
+                <button type="button" onclick="triggerWaReply(${index})" class="w-full text-left bg-emerald-50 hover:bg-emerald-100 text-emerald-800 p-3 rounded-lg text-[11px] font-bold">⚡ ${safe(item.label)}</button>`).join("");
 
-            // WhatsApp Bot
-            const waOpts = document.getElementById('wa-options-container');
-            if(waOpts) {
-                waOpts.innerHTML = (window.appData.whatsapp.options || []).map(o => `
-                    <button onclick="triggerWaReply('${encodeURIComponent(o.reply)}')" class="w-full text-left bg-emerald-50 text-emerald-800 p-2 rounded-lg text-[11px] font-bold">
-                        ⚡ ${o.label}
-                    </button>
-                `).join('');
+            const direct = $("wa-direct-link");
+            if (direct) {
+                direct.href = `https://wa.me/${normalizePhone(data.whatsapp.phone)}?text=${encodeURIComponent(data.whatsapp.msg || defaultState.whatsapp.msg)}`;
+                direct.rel = "noopener noreferrer";
             }
+            const footerWa = $("footer-wa-link");
+            if (footerWa) footerWa.href = `https://wa.me/${normalizePhone(data.whatsapp.phone)}`;
 
             renderAdminTables();
-        };
-
-        window.renderAdminTables = function() {
-            // Usuarios
-            const uCont = document.getElementById('users-table-container');
-            if(uCont) {
-                uCont.innerHTML = `<table class="w-full text-xs text-left text-slate-300 mt-3">
-                    <thead class="bg-slate-800 uppercase"><tr><th class="p-2">Nombre</th><th class="p-2">Usuario</th><th class="p-2">Acción</th></tr></thead>
-                    <tbody>${window.appData.users.map((u, i) => `<tr class="border-b border-slate-800"><td class="p-2">${u.name}</td><td class="p-2">${u.email}</td><td class="p-2"><button onclick="deleteUser(${i})" class="text-red-400 font-bold">Eliminar</button></td></tr>`).join('')}</tbody>
-                </table>`;
-            }
-
-            // Servicios
-            const sCont = document.getElementById('services-table-container');
-            if(sCont) {
-                sCont.innerHTML = `<table class="w-full text-xs text-left text-slate-300 mt-3">
-                    <thead class="bg-slate-800 uppercase"><tr><th class="p-2">Título</th><th class="p-2">Acción</th></tr></thead>
-                    <tbody>${window.appData.services.map((s, i) => `<tr class="border-b border-slate-800"><td class="p-2">${s.title}</td><td class="p-2"><button onclick="deleteService(${i})" class="text-red-400 font-bold">Eliminar</button></td></tr>`).join('')}</tbody>
-                </table>`;
-            }
-
-            // Testimonios
-            const tCont = document.getElementById('testimonials-table-container');
-            if(tCont) {
-                tCont.innerHTML = `<table class="w-full text-xs text-left text-slate-300 mt-3">
-                    <thead class="bg-slate-800 uppercase"><tr><th class="p-2">Cliente</th><th class="p-2">Acción</th></tr></thead>
-                    <tbody>${window.appData.testimonials.map((t, i) => `<tr class="border-b border-slate-800"><td class="p-2">${t.author}</td><td class="p-2"><button onclick="deleteTestimonial(${i})" class="text-red-400 font-bold">Eliminar</button></td></tr>`).join('')}</tbody>
-                </table>`;
-            }
-
-            // Productos
-            const pCont = document.getElementById('products-table-container');
-            if(pCont) {
-                pCont.innerHTML = `<table class="w-full text-xs text-left text-slate-300 mt-3">
-                    <thead class="bg-slate-800 uppercase"><tr><th class="p-2">Producto</th><th class="p-2">Precio</th><th class="p-2">Acción</th></tr></thead>
-                    <tbody>${window.appData.products.map((p, i) => `<tr class="border-b border-slate-800"><td class="p-2">${p.title}</td><td class="p-2">$${p.price}</td><td class="p-2"><button onclick="deleteProduct(${i})" class="text-red-400 font-bold">Eliminar</button></td></tr>`).join('')}</tbody>
-                </table>`;
-            }
-
-            // Galería
-            const gCont = document.getElementById('gallery-table-container');
-            if(gCont) {
-                gCont.innerHTML = `<table class="w-full text-xs text-left text-slate-300 mt-3">
-                    <thead class="bg-slate-800 uppercase"><tr><th class="p-2">Título</th><th class="p-2">Acción</th></tr></thead>
-                    <tbody>${window.appData.gallery.map((g, i) => `<tr class="border-b border-slate-800"><td class="p-2">${g.title}</td><td class="p-2"><button onclick="deleteGalleryImage(${i})" class="text-red-400 font-bold">Eliminar</button></td></tr>`).join('')}</tbody>
-                </table>`;
-            }
-
-            // Blog
-            const bCont = document.getElementById('blog-table-container');
-            if(bCont) {
-                bCont.innerHTML = `<table class="w-full text-xs text-left text-slate-300 mt-3">
-                    <thead class="bg-slate-800 uppercase"><tr><th class="p-2">Título</th><th class="p-2">Acción</th></tr></thead>
-                    <tbody>${window.appData.blog.map((b, i) => `<tr class="border-b border-slate-800"><td class="p-2">${b.title}</td><td class="p-2"><button onclick="deleteBlogPost(${i})" class="text-red-400 font-bold">Eliminar</button></td></tr>`).join('')}</tbody>
-                </table>`;
-            }
-        };
-
-        // ACCIONES CRUD DEL PANEL
-        window.addUser = async function() {
-            const name = document.getElementById('usr-name').value;
-            const email = document.getElementById('usr-email').value;
-            const pass = document.getElementById('usr-pass').value;
-            if(!name || !email) return alert("Completa los datos del usuario");
-            window.appData.users.push({ id: Date.now().toString(), name, email, pass, role: 'Administrador' });
-            await window.saveData();
-        };
-
-        window.deleteUser = async function(idx) {
-            window.appData.users.splice(idx, 1);
-            await window.saveData();
-        };
-
-        window.addService = async function() {
-            const title = document.getElementById('srv-title').value;
-            const icon = document.getElementById('srv-icon').value;
-            const desc = document.getElementById('srv-desc').value;
-            if(!title) return alert("Ingresa un título de servicio");
-            window.appData.services.push({ id: Date.now().toString(), title, icon: icon || 'fa-flask', desc });
-            await window.saveData();
-        };
-
-        window.deleteService = async function(idx) {
-            window.appData.services.splice(idx, 1);
-            await window.saveData();
-        };
-
-        window.addTestimonial = async function() {
-            const author = document.getElementById('tst-author').value;
-            const role = document.getElementById('tst-role').value;
-            const rating = document.getElementById('tst-rating').value;
-            const text = document.getElementById('tst-text').value;
-            if(!author) return alert("Ingresa el autor");
-            window.appData.testimonials.push({ id: Date.now().toString(), author, role, rating, text });
-            await window.saveData();
-        };
-
-        window.deleteTestimonial = async function(idx) {
-            window.appData.testimonials.splice(idx, 1);
-            await window.saveData();
-        };
-
-        window.addProduct = async function() {
-            const title = document.getElementById('prd-title').value;
-            const category = document.getElementById('prd-category').value;
-            const price = document.getElementById('prd-price').value;
-            const desc = document.getElementById('prd-desc').value;
-            const imgFile = document.getElementById('prd-img-file');
-            const imgUrl = document.getElementById('prd-img-url').value;
-
-            let img = 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=500&q=80';
-            if (imgFile && imgFile.files[0]) {
-                img = await window.fileToBase64(imgFile.files[0]);
-            } else if (imgUrl) {
-                img = imgUrl;
-            }
-
-            if(!title) return alert("Ingresa el nombre del producto");
-            window.appData.products.push({ id: Date.now().toString(), title, category, price, desc, img, icon: 'fa-bolt' });
-            await window.saveData();
-        };
-
-        window.deleteProduct = async function(idx) {
-            window.appData.products.splice(idx, 1);
-            await window.saveData();
-        };
-
-        window.saveWaSettings = async function() {
-            window.appData.whatsapp.phone = document.getElementById('wa-phone').value;
-            window.appData.whatsapp.msg = document.getElementById('wa-msg').value;
-            await window.saveData();
-            alert("Ajustes de WhatsApp guardados");
-        };
-
-        window.addGalleryImage = async function() {
-            const title = document.getElementById('gal-title').value;
-            const galFile = document.getElementById('gal-img-file');
-            const galUrl = document.getElementById('gal-img-url').value;
-
-            let url = 'https://images.unsplash.com/photo-1581093588401-fbb62a02f120?auto=format&fit=crop&w=500&q=80';
-            if (galFile && galFile.files[0]) {
-                url = await window.fileToBase64(galFile.files[0]);
-            } else if (galUrl) {
-                url = galUrl;
-            }
-
-            window.appData.gallery.push({ id: Date.now().toString(), title, url });
-            await window.saveData();
-        };
-
-        window.deleteGalleryImage = async function(idx) {
-            window.appData.gallery.splice(idx, 1);
-            await window.saveData();
-        };
-
-        window.addBlogPost = async function() {
-            const title = document.getElementById('blog-title').value;
-            const content = document.getElementById('blog-editor').innerHTML;
-            if(!title) return alert("Ingresa el título del artículo");
-            
-            window.appData.blog.push({ 
-                id: Date.now().toString(), 
-                title, 
-                content, 
-                img: 'https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?auto=format&fit=crop&w=500&q=80' 
-            });
-            await window.saveData();
-        };
-
-        window.deleteBlogPost = async function(idx) {
-            window.appData.blog.splice(idx, 1);
-            await window.saveData();
-        };
-
-        window.saveSiteSettings = async function() {
-            if(!window.appData.brandLogos) window.appData.brandLogos = { marraflab: '', thunder: '' };
-            const mFile = document.getElementById('cfg-logo-file');
-            const mUrl = document.getElementById('cfg-logo-url').value;
-
-            if(mFile && mFile.files[0]) {
-                window.appData.brandLogos.marraflab = await window.fileToBase64(mFile.files[0]);
-            } else if(mUrl) {
-                window.appData.brandLogos.marraflab = mUrl;
-            }
-
-            window.appData.seo = {
-                title: document.getElementById('cfg-seo-title').value,
-                description: document.getElementById('cfg-seo-desc').value,
-                keywords: document.getElementById('cfg-seo-keywords').value
-            };
-
-            await window.saveData();
-            alert("¡Configuración guardada exitosamente!");
-        };
-		
-		// Añadir una opción al Bot de WhatsApp
-		window.addWaOption = async function() {
-			const label = document.getElementById('wa-opt-label').value;
-			const reply = document.getElementById('wa-opt-reply').value;
-			if(!label || !reply) return alert("Completa el título del botón y la respuesta");
-			
-			if(!window.appData.whatsapp.options) window.appData.whatsapp.options = [];
-			window.appData.whatsapp.options.push({ label, reply });
-			
-			document.getElementById('wa-opt-label').value = '';
-			document.getElementById('wa-opt-reply').value = '';
-			await window.saveData();
-			renderWaOptionsTable();
-		};
-
-		// Eliminar opción del Bot
-		window.deleteWaOption = async function(idx) {
-			window.appData.whatsapp.options.splice(idx, 1);
-			await window.saveData();
-			renderWaOptionsTable();
-		};
-
-        window.onload = function() { renderAll(); };
-    </script>
-
-    <!-- FUNCIONES JS INTERFAZ -->
-    <script>
-        let loggedIn = false;
-        function toggleMobileMenu() { document.getElementById('mobile-menu').classList.toggle('hidden'); }
-        function toggleWaChat() { document.getElementById('wa-chat-window').classList.toggle('hidden'); }
-        function openLoginModal() { document.getElementById('login-modal').classList.remove('hidden'); }
-        function closeLoginModal() { document.getElementById('login-modal').classList.add('hidden'); }
-
-        function handleLogin(e) {
-            e.preventDefault();
-            const u = document.getElementById('login-user').value;
-            const p = document.getElementById('login-pass').value;
-            const found = window.appData.users.find(usr => (usr.email === u || usr.name === u) && (usr.pass === p || p === 'admin123'));
-            if(found || (u === 'admin' && p === 'admin123')) {
-                loggedIn = true;
-                closeLoginModal();
-                document.getElementById('backoffice-modal').classList.remove('hidden');
-                switchAdminTab('users');
-            } else {
-                document.getElementById('login-error').classList.remove('hidden');
-            }
+            fillSettings();
         }
 
-        function logoutAdmin() {
-            loggedIn = false;
-            document.getElementById('backoffice-modal').classList.add('hidden');
+        function normalizePhone(phone) {
+            return String(phone || "").replace(/\D/g, "");
         }
 
-        function toggleBackofficeModal() {
-            if(!loggedIn) openLoginModal();
-            else document.getElementById('backoffice-modal').classList.toggle('hidden');
+        function fillSettings() {
+            const d = window.appData;
+            if ($("wa-phone") && !$("wa-phone").value) $("wa-phone").value = d.whatsapp.phone;
+            if ($("wa-msg") && !$("wa-msg").value) $("wa-msg").value = d.whatsapp.msg;
+            if ($("cfg-seo-title") && !$("cfg-seo-title").value) $("cfg-seo-title").value = d.seo.title;
+            if ($("cfg-seo-desc") && !$("cfg-seo-desc").value) $("cfg-seo-desc").value = d.seo.description;
+            if ($("cfg-seo-keywords") && !$("cfg-seo-keywords").value) $("cfg-seo-keywords").value = d.seo.keywords;
         }
 
-        function switchAdminTab(tabName) {
-            document.querySelectorAll('.admin-content').forEach(el => el.classList.add('hidden'));
-            document.querySelectorAll('.admin-tab-btn').forEach(btn => {
-                btn.classList.remove('bg-marra-green', 'text-white');
-                btn.classList.add('text-slate-400');
-            });
-            const targetTab = document.getElementById(`admin-${tabName}`);
-            const targetBtn = document.getElementById(`tab-btn-${tabName}`);
-            if(targetTab) targetTab.classList.remove('hidden');
-            if(targetBtn) {
-                targetBtn.classList.add('bg-marra-green', 'text-white');
-                targetBtn.classList.remove('text-slate-400');
-            }
+        function tableMarkup(headers, rows) {
+            return `<div class="overflow-x-auto"><table class="w-full text-xs text-left text-slate-300 mt-3"><thead class="bg-slate-800 uppercase"><tr>${headers.map(h => `<th class="p-2">${h}</th>`).join("")}</tr></thead><tbody>${rows || `<tr><td colspan="${headers.length}" class="p-3 text-center text-slate-500">No hay registros.</td></tr>`}</tbody></table></div>`;
         }
-
-        function execCmd(command, value = null) { document.execCommand(command, false, value); }
-        function triggerWaReply(encodedReply) {
-            window.open(`https://wa.me/${window.appData.whatsapp.phone}?text=${encodedReply}`, '_blank');
+        function actionButtons(type, index) {
+            return `<div class="flex gap-3"><button type="button" onclick="editRecord('${type}',${index})" class="text-sky-400 hover:text-sky-300 font-bold">Editar</button><button type="button" onclick="deleteRecord('${type}',${index})" class="text-red-400 hover:text-red-300 font-bold">Eliminar</button></div>`;
         }
-
-        function submitQuickQuote(e) {
-            e.preventDefault();
-            const company = document.getElementById('qq-company').value;
-            const phone = document.getElementById('qq-phone').value;
-            const category = document.getElementById('qq-category').value;
-            const text = `Hola MARRAFLAB, represento a ${company}. Cotización: ${category}. Cel: ${phone}`;
-            window.open(`https://wa.me/${window.appData.whatsapp.phone}?text=${encodeURIComponent(text)}`, '_blank');
+        function renderAdminTables() {
+            const d = window.appData;
+            const configs = [
+                ["services-table-container", ["Servicio", "Acción"], d.services.map((x,i)=>`<tr class="border-b border-slate-800"><td class="p-2">${safe(x.title)}</td><td class="p-2">${actionButtons("services",i)}</td></tr>`) ],
+                ["testimonials-table-container", ["Cliente", "Acción"], d.testimonials.map((x,i)=>`<tr class="border-b border-slate-800"><td class="p-2">${safe(x.author)}</td><td class="p-2">${actionButtons("testimonials",i)}</td></tr>`) ],
+                ["products-table-container", ["Producto", "Precio", "Acción"], d.products.map((x,i)=>`<tr class="border-b border-slate-800"><td class="p-2">${safe(x.title)}</td><td class="p-2">${safe(x.price || "Consultar")}</td><td class="p-2">${actionButtons("products",i)}</td></tr>`) ],
+                ["gallery-table-container", ["Imagen", "Acción"], d.gallery.map((x,i)=>`<tr class="border-b border-slate-800"><td class="p-2">${safe(x.title)}</td><td class="p-2">${actionButtons("gallery",i)}</td></tr>`) ],
+                ["blog-table-container", ["Artículo", "Acción"], d.blog.map((x,i)=>`<tr class="border-b border-slate-800"><td class="p-2">${safe(x.title)}</td><td class="p-2">${actionButtons("blog",i)}</td></tr>`) ]
+            ];
+            configs.forEach(([id, headers, rows]) => { const el = $(id); if (el) el.innerHTML = tableMarkup(headers, rows.join("")); });
+            renderWaOptionsTable();
         }
+        window.deleteRecord = async (type, index) => {
+            const map = {services:"Servicios",products:"Productos",testimonials:"Testimonios",gallery:"Galería",blog:"Blog",options:"WhatsApp"};
+            if (!map[type] || !canManage(map[type])) return showNotice("No tienes permiso para realizar esta acción.", "error");
+            const arr = type === "options" ? window.appData.whatsapp.options : window.appData[type];
+            const item = arr?.[index]; if (!item) return;
+            if (!confirm(`¿Eliminar definitivamente “${item.title || item.label || item.author || "este registro"}”?`)) return;
+            const backup = clone(arr); arr.splice(index, 1);
+            pendingActivity = {action:"Eliminación",section:map[type],details:`Se eliminó: ${item.title || item.label || item.author || item.id}`,itemId:item.id,successMessage:"El registro se eliminó correctamente."};
+            if (!(await window.saveData())) { if(type === "options") window.appData.whatsapp.options=backup; else window.appData[type]=backup; renderAll(); pendingActivity=null; }
+        };
+        window.deleteWaOption = index => window.deleteRecord("options", index);
 
-        function submitContactForm(e) {
-            e.preventDefault();
-            alert("¡Mensaje enviado a MARRAFLAB Productos Químicos S.A.S.!");
-            e.target.reset();
-        }
+        const editSchemas = {
+            services: {label:"Servicio",fields:[["title","Título","text"],["icon","Icono Font Awesome","text"],["desc","Descripción","textarea"]]},
+            products: {label:"Producto",fields:[["title","Nombre","text"],["category","Categoría","text"],["price","Precio USD","text"],["img","URL de imagen","text"],["desc","Descripción","textarea"]]},
+            testimonials: {label:"Testimonio",fields:[["author","Cliente","text"],["role","Cargo","text"],["rating","Calificación","select"],["text","Comentario","textarea"]]},
+            gallery: {label:"Imagen de galería",fields:[["title","Título","text"],["url","URL de imagen","text"]]},
+            blog: {label:"Artículo",fields:[["title","Título","text"],["content","Contenido HTML permitido","textarea"]]},
+            options: {label:"Opción de WhatsApp",fields:[["label","Texto del botón","text"],["reply","Mensaje","textarea"]]}
+        };
+        window.editRecord = (type,index) => {
+            const schema=editSchemas[type], arr=type==="options"?window.appData.whatsapp.options:window.appData[type], item=arr?.[index];
+            const section={services:"Servicios",products:"Productos",testimonials:"Testimonios",gallery:"Galería",blog:"Blog",options:"WhatsApp"}[type];
+            if(!schema||!item||!canManage(section)) return showNotice("No tienes permiso para editar este registro.","error");
+            editingRecord={type,index,id:item.id}; $("record-edit-title").textContent="Editar "+schema.label;
+            $("record-edit-fields").innerHTML=schema.fields.map(([key,label,kind])=>{
+                const value=String(item[key]??"");
+                if(kind==="textarea") return `<label class="block text-xs text-slate-300">${safe(label)}<textarea name="${key}" rows="4" class="mt-1 w-full p-3 bg-slate-800 border border-slate-700 rounded-lg text-white">${safe(value)}</textarea></label>`;
+                if(kind==="select") return `<label class="block text-xs text-slate-300">${safe(label)}<select name="${key}" class="mt-1 w-full p-3 bg-slate-800 border border-slate-700 rounded-lg text-white"><option value="5" ${value==="5"?"selected":""}>5 estrellas</option><option value="4" ${value==="4"?"selected":""}>4 estrellas</option><option value="3" ${value==="3"?"selected":""}>3 estrellas</option><option value="2" ${value==="2"?"selected":""}>2 estrellas</option><option value="1" ${value==="1"?"selected":""}>1 estrella</option></select></label>`;
+                return `<label class="block text-xs text-slate-300">${safe(label)}<input name="${key}" value="${safe(value)}" class="mt-1 w-full p-3 bg-slate-800 border border-slate-700 rounded-lg text-white"></label>`;
+            }).join("");
+            $("record-edit-modal").classList.remove("hidden"); $("record-edit-modal").classList.add("flex");
+        };
+        window.closeRecordEditor=()=>{ $("record-edit-modal").classList.add("hidden"); $("record-edit-modal").classList.remove("flex"); editingRecord=null; };
+        window.saveRecordEdit=async event=>{
+            event.preventDefault(); if(!editingRecord)return;
+            const {type,index,id}=editingRecord, form=new FormData(event.target), arr=type==="options"?window.appData.whatsapp.options:window.appData[type], item=arr[index], before=clone(item);
+            const updated={...item}; for(const [key,value] of form.entries()) updated[key]=String(value).trim();
+            if(type==="blog") updated.content=cleanRichText(updated.content);
+            if(!updated.title&&!updated.label&&!updated.author) return showNotice("El título o nombre es obligatorio.","error");
+            if(type==="products" && updated.price && (!/^\d+(\.\d{1,2})?$/.test(updated.price))) return showNotice("El precio debe ser numérico y tener máximo dos decimales.","error");
+            arr[index]=updated;
+            pendingActivity={action:"Edición",section:{services:"Servicios",products:"Productos",testimonials:"Testimonios",gallery:"Galería",blog:"Blog",options:"WhatsApp"}[type],details:`Se modificó: ${updated.title||updated.label||updated.author||id}`,itemId:id,successMessage:"Los cambios del registro se actualizaron correctamente."};
+            if(await window.saveData()) closeRecordEditor(); else {arr[index]=before;renderAll();pendingActivity=null;}
+        };
 
-        function openProductModal(id) {
-            const p = window.appData.products.find(item => item.id === id);
-            if(!p) return;
-            const modal = document.getElementById('detail-modal');
-            const content = document.getElementById('detail-modal-content');
-            content.innerHTML = `
-                <img src="${p.img}" class="w-full h-48 object-cover rounded-xl mb-3">
-                <h3 class="text-lg font-black text-slate-900">${p.title}</h3>
-                <p class="text-slate-600 text-xs mt-2">${p.desc}</p>
-                <div class="mt-4 pt-3 border-t border-slate-200 flex justify-between items-center">
-                    <span class="text-xl font-black text-slate-900">$${p.price} USD</span>
-                    <a href="https://wa.me/${window.appData.whatsapp.phone}?text=Cotizar%20${encodeURIComponent(p.title)}" target="_blank" class="bg-emerald-500 text-white px-4 py-2 rounded-lg text-xs font-bold">Pedir por WhatsApp</a>
-                </div>
-            `;
-            modal.classList.remove('hidden');
-        }
-		
-		// Renderizar la tabla de opciones en el panel admin
-		function renderWaOptionsTable() {
-			const container = document.getElementById('wa-options-table-container');
-			if(!container) return;
-			const options = window.appData.whatsapp.options || [];
-			container.innerHTML = `
-				<table class="w-full text-xs text-left text-slate-300 mt-2 border border-slate-700 rounded-lg overflow-hidden">
-					<thead class="bg-slate-900 text-slate-400 uppercase">
-						<tr><th class="p-2">Botón / Opción</th><th class="p-2">Respuesta Configurada</th><th class="p-2">Acción</th></tr>
-					</thead>
-					<tbody>
-						${options.length === 0 ? '<tr><td colspan="3" class="p-3 text-center text-slate-500">No hay opciones creadas aún.</td></tr>' : 
-						options.map((o, i) => `
-							<tr class="border-t border-slate-700">
-								<td class="p-2 font-bold text-white">${o.label}</td>
-								<td class="p-2 text-slate-400">${o.reply}</td>
-								<td class="p-2"><button onclick="deleteWaOption(${i})" class="text-red-400 hover:text-red-300 font-bold">Eliminar</button></td>
-							</tr>
-						`).join('')}
-					</tbody>
-				</table>
-			`;
-		}
+        window.loadManagedUsers = async () => {
+            const el=$("users-table-container"); if(!el||currentRole!=="Administrador")return;
+            try {
+                const snap=await getDocs(collection(db,"userRoles"));
+                const rows=snap.docs.map(d=>({id:d.id,...d.data()})).map(u=>`<tr class="border-b border-slate-800"><td class="p-2">${safe(u.name||"—")}</td><td class="p-2">${safe(u.email||"—")}</td><td class="p-2"><select id="role-${safe(u.id)}" class="bg-slate-800 border border-slate-700 rounded p-1"><option ${u.role==="Editor"?"selected":""}>Editor</option><option ${u.role==="Administrador"?"selected":""}>Administrador</option></select></td><td class="p-2">${u.active===false?"Inactivo":"Activo"}</td><td class="p-2"><div class="flex flex-wrap gap-2"><button onclick="updateManagedUser('${safe(u.id)}','role')" class="text-emerald-400 font-bold">Guardar rol</button><button onclick="updateManagedUser('${safe(u.id)}','toggle')" class="text-amber-300 font-bold">${u.active===false?"Activar":"Desactivar"}</button><button onclick="sendResetLink('${safe(u.email||"")}')" class="text-sky-400 font-bold">Restablecer clave</button></div></td></tr>`).join("");
+                el.innerHTML=tableMarkup(["Nombre","Correo","Rol","Estado","Acciones"],rows);
+            } catch(e) { console.error(e); el.innerHTML='<p class="text-red-400 text-xs">No se pudo cargar la lista de usuarios. Verifica las reglas de Firestore.</p>'; }
+        };
+        window.addUser = async () => {
+            if(currentRole!=="Administrador")return showNotice("Solo un administrador puede crear usuarios.","error");
+            const name=$("usr-name").value.trim(), email=$("usr-email").value.trim().toLowerCase(), role=$("usr-role").value;
+            if(!name||!email||!/^\S+@\S+\.\S+$/.test(email))return showNotice("Ingresa un nombre y un correo válido.","error");
+            try {
+                const createManagedUser=httpsCallable(functions,"createManagedUser");
+                await createManagedUser({name,email,role});
+                try { await sendPasswordResetEmail(auth,email); }
+                catch(resetError) { console.warn("Cuenta creada, pero falló el envío del enlace:",resetError); showNotice("La cuenta se creó, pero no se pudo enviar el correo de acceso. Usa Restablecer clave en la lista.","warning"); }
+                $("usr-name").value=$("usr-email").value=""; $("usr-role").value="Editor";
+                await loadManagedUsers(); showNotice("Cuenta creada. Envía al usuario el enlace de restablecimiento de contraseña.","success");
+            } catch(e) { console.error(e); showNotice(e.message||"No se pudo crear el usuario.","error"); }
+        };
+        window.sendResetLink=async email=>{ if(currentRole!=="Administrador")return; try{await sendPasswordResetEmail(auth,email);await writeActivity("Restablecimiento de acceso","Usuarios",`Se solicitó restablecer clave para ${email}`);showNotice("Se envió el enlace para restablecer la contraseña.","success");}catch(e){showNotice(e.message||"No se pudo enviar el correo.","error");} };
+        window.updateManagedUser=async(uid,operation)=>{
+            if(currentRole!=="Administrador"||uid===currentUser.uid)return showNotice("No puedes modificar tu propia cuenta desde esta pantalla.","warning");
+            try{
+                const payload={uid,operation};
+                if(operation==="role")payload.role=$("role-"+uid).value;
+                const manage=httpsCallable(functions,"manageManagedUser"); await manage(payload);
+                await loadManagedUsers(); showNotice("Los permisos del usuario se actualizaron.","success");
+            }catch(e){console.error(e);showNotice(e.message||"No se pudo actualizar el usuario.","error");}
+        };
+        window.loadActivity=async()=>{
+            const el=$("activity-table-container"); if(!el||!currentUser)return;
+            try{
+                const q=query(collection(db,"activity"),orderBy("createdAt","desc"),limit(100)); const snap=await getDocs(q);
+                const rows=snap.docs.map(d=>d.data()).map(a=>{const dt=a.createdAt?.toDate?a.createdAt.toDate().toLocaleString("es-EC"):"Pendiente";return `<tr class="border-b border-slate-800"><td class="p-2 whitespace-nowrap">${safe(dt)}</td><td class="p-2">${safe(a.actorName||a.actorEmail)}</td><td class="p-2">${safe(a.role)}</td><td class="p-2">${safe(a.action)}</td><td class="p-2">${safe(a.section)}</td><td class="p-2">${safe(a.details)}</td></tr>`;}).join("");
+                el.innerHTML=tableMarkup(["Fecha","Usuario","Rol","Acción","Sección","Detalle"],rows);
+            }catch(e){console.error(e);el.innerHTML='<p class="text-red-400 text-xs">No se pudo cargar el historial. Revisa las reglas de Firestore.</p>';}
+        };
 
-        function openBlogModal(index) {
+        window.addService = async () => {
+            const title = $("srv-title").value.trim(), icon = $("srv-icon").value.trim(), desc = $("srv-desc").value.trim();
+            if (!title || !desc) return showNotice("Completa el título y la descripción del servicio.", "error");
+            window.appData.services.push({ id: makeId("srv"), title, icon: icon || "fa-flask", desc });
+            pendingActivity={action:"Creación",section:"Servicios",details:`Nuevo servicio: ${title}`,successMessage:"El servicio se publicó correctamente."};
+            if (await window.saveData()) $("srv-title").value = $("srv-icon").value = $("srv-desc").value = "";
+        };
+        window.addTestimonial = async () => {
+            const author = $("tst-author").value.trim(), role = $("tst-role").value.trim(), rating = $("tst-rating").value, text = $("tst-text").value.trim();
+            if (!author || !text) return showNotice("Completa el cliente y el comentario.", "error");
+            window.appData.testimonials.push({ id: makeId("tst"), author, role, rating, text });
+            pendingActivity={action:"Creación",section:"Testimonios",details:`Nuevo testimonio: ${author}`,successMessage:"El testimonio se publicó correctamente."};
+            if (await window.saveData()) $("tst-author").value = $("tst-role").value = $("tst-text").value = "";
+        };
+        window.addProduct = async () => {
+            const title = $("prd-title").value.trim(), category = $("prd-category").value.trim(), price = $("prd-price").value.trim(), desc = $("prd-desc").value.trim();
+            if (!title || !desc) return showNotice("Completa el nombre y la descripción del producto.", "error");
+            try {
+                let img = $("prd-img-url").value.trim() || "https://placehold.co/600x400?text=PRODUCTOS+THUNDER";
+                if ($("prd-img-file").files[0]) img = await window.fileToBase64($("prd-img-file").files[0]);
+                window.appData.products.push({ id: makeId("prd"), title, category: category || "General", price, desc, img, icon: "fa-bolt" });
+                pendingActivity={action:"Creación",section:"Productos",details:`Nuevo producto: ${title}`,successMessage:"El producto se publicó correctamente."};
+                if (await window.saveData()) ["prd-title","prd-category","prd-price","prd-desc","prd-img-url","prd-img-file"].forEach(id => $(id).value = "");
+            } catch (error) { showNotice(error.message, "error"); }
+        };
+        window.saveWaSettings = async () => {
+            const phone = normalizePhone($("wa-phone").value);
+            if (phone.length < 10 || phone.length > 15) return showNotice("Ingresa un número de WhatsApp internacional válido.", "error");
+            window.appData.whatsapp.phone = phone;
+            pendingActivity={action:"Actualización",section:"WhatsApp",details:"Se actualizaron los datos generales del bot.",successMessage:"La configuración de WhatsApp se guardó correctamente."};
+            window.appData.whatsapp.msg = $("wa-msg").value.trim() || defaultState.whatsapp.msg;
+            await window.saveData();
+        };
+        window.addWaOption = async () => {
+            const label = $("wa-opt-label").value.trim(), reply = $("wa-opt-reply").value.trim();
+            if (!label || !reply) return showNotice("Completa el texto del botón y su mensaje.", "error");
+            window.appData.whatsapp.options.push({ id: makeId("wa"), label, reply });
+            pendingActivity={action:"Creación",section:"WhatsApp",details:`Nueva opción: ${label}`,successMessage:"La opción de WhatsApp se añadió correctamente."};
+            if (await window.saveData()) $("wa-opt-label").value = $("wa-opt-reply").value = "";
+        };
+        window.deleteWaOption = async index => {
+            if (!window.appData.whatsapp.options[index]) return;
+            if (!confirm("¿Eliminar esta opción de WhatsApp?")) return;
+            window.appData.whatsapp.options.splice(index, 1);
+            await window.saveData();
+        };
+        window.addGalleryImage = async () => {
+            const title = $("gal-title").value.trim();
+            if (!title) return showNotice("Escribe un título para la imagen.", "error");
+            try {
+                let url = $("gal-img-url").value.trim() || "";
+                if ($("gal-img-file").files[0]) url = await window.fileToBase64($("gal-img-file").files[0]);
+                if (!url) return showNotice("Selecciona una imagen o pega su URL.", "error");
+                window.appData.gallery.push({ id: makeId("gal"), title, url });
+                pendingActivity={action:"Creación",section:"Galería",details:`Nueva imagen: ${title}`,successMessage:"La imagen se añadió a la galería."};
+                if (await window.saveData()) $("gal-title").value = $("gal-img-url").value = $("gal-img-file").value = "";
+            } catch (error) { showNotice(error.message, "error"); }
+        };
+        window.addBlogPost = async () => {
+            const title = $("blog-title").value.trim(), content = cleanRichText($("blog-editor").innerHTML);
+            if (!title || !content.trim()) return showNotice("Escribe el título y el contenido del artículo.", "error");
+            window.appData.blog.push({ id: makeId("blog"), title, content, img: "https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?auto=format&fit=crop&w=500&q=80" });
+            pendingActivity={action:"Publicación",section:"Blog",details:`Nuevo artículo: ${title}`,successMessage:"El artículo se publicó correctamente."};
+            if (await window.saveData()) $("blog-title").value = $("blog-editor").innerHTML = "";
+        };
+        window.saveSiteSettings = async () => {
+            if(currentRole!=="Administrador")return showNotice("Solo el administrador puede modificar logos y SEO.","error");
+            try {
+                const file = $("cfg-logo-file").files[0], url = $("cfg-logo-url").value.trim();
+                if (file) window.appData.brandLogos.marraflab = await window.fileToBase64(file);
+                else if (url) window.appData.brandLogos.marraflab = url;
+                window.appData.seo = {
+                    title: $("cfg-seo-title").value.trim() || defaultState.seo.title,
+                    description: $("cfg-seo-desc").value.trim(),
+                    keywords: $("cfg-seo-keywords").value.trim()
+                };
+                pendingActivity={action:"Actualización",section:"Configuración",details:"Se actualizaron los logos y los metadatos SEO.",successMessage:"La configuración del sitio se guardó correctamente."};
+                if (await window.saveData()) {
+                    $("cfg-logo-file").value = "";
+                    $("cfg-logo-url").value = "";
+                }
+            } catch (error) { showNotice(error.message, "error"); }
+        };
+
+        window.renderWaOptionsTable = function () {
+            const container = $("wa-options-table-container");
+            if (!container) return;
+            const rows = window.appData.whatsapp.options.map((item, i) => `
+                <tr class="border-t border-slate-700"><td class="p-2 font-bold text-white">${safe(item.label)}</td>
+                <td class="p-2 text-slate-400">${safe(item.reply)}</td><td class="p-2">${actionButtons("options", i)}</td></tr>`).join("");
+            container.innerHTML = tableMarkup(["Opción", "Mensaje", "Acción"], rows);
+        };
+
+        window.openProductModal = function (id) {
+            const product = window.appData.products.find(item => item.id === id);
+            if (!product) return;
+            $("detail-modal-content").innerHTML = `
+                <img src="${safe(product.img)}" alt="${safe(product.title)}" class="w-full h-48 object-cover rounded-xl mb-3">
+                <h3 class="text-lg font-black text-slate-900">${safe(product.title)}</h3>
+                <p class="text-xs text-marra-orange font-bold mt-1">${safe(product.category)}</p>
+                <p class="text-slate-600 text-xs mt-2">${safe(product.desc)}</p>
+                <div class="mt-4 pt-3 border-t border-slate-200 flex justify-between items-center gap-3">
+                    <span class="text-xl font-black text-slate-900">${product.price ? "$" + safe(product.price) + " USD" : "Precio a consultar"}</span>
+                    <a href="https://wa.me/${normalizePhone(window.appData.whatsapp.phone)}?text=${encodeURIComponent("Hola, deseo información sobre " + product.title)}" target="_blank" rel="noopener noreferrer" class="bg-emerald-500 text-white px-4 py-2 rounded-lg text-xs font-bold">Consultar</a>
+                </div>`;
+            $("detail-modal").classList.remove("hidden");
+        };
+        window.openBlogModal = function (index) {
             const article = window.appData.blog[index];
-            if(!article) return;
-            const modal = document.getElementById('detail-modal');
-            const content = document.getElementById('detail-modal-content');
-            content.innerHTML = `
-                <img src="${article.img}" class="w-full h-48 object-cover rounded-xl mb-3">
-                <h3 class="text-lg font-black text-slate-900 mb-2">${article.title}</h3>
-                <div class="text-slate-600 text-xs leading-relaxed space-y-2">${article.content}</div>
-            `;
-            modal.classList.remove('hidden');
-        }
+            if (!article) return;
+            $("detail-modal-content").innerHTML = `<img src="${safe(article.img)}" alt="${safe(article.title)}" class="w-full h-48 object-cover rounded-xl mb-3"><h3 class="text-lg font-black text-slate-900 mb-3">${safe(article.title)}</h3><div class="text-slate-600 text-xs leading-relaxed space-y-2">${cleanRichText(article.content)}</div>`;
+            $("detail-modal").classList.remove("hidden");
+        };
 
-        function closeDetailModal() { document.getElementById('detail-modal').classList.add('hidden'); }
-		
-		function navigateTo(pageId) {
-			// 1. Ocultar todas las secciones
-			document.querySelectorAll('.page-section').forEach(sec => {
-				sec.classList.add('hidden');
-			});
+        // Funciones globales de navegación y ventanas
+        window.toggleMobileMenu = () => $("mobile-menu")?.classList.toggle("hidden");
+        window.toggleWaChat = () => $("wa-chat-window")?.classList.toggle("hidden");
+        window.openLoginModal = () => { $("login-error")?.classList.add("hidden"); $("login-modal")?.classList.remove("hidden"); };
+        window.closeLoginModal = () => $("login-modal")?.classList.add("hidden");
+        window.closeDetailModal = () => $("detail-modal")?.classList.add("hidden");
+        window.toggleBackofficeModal = () => {
+            if (!window.loggedIn) return window.openLoginModal();
+            $("backoffice-modal")?.classList.toggle("hidden");
+        };
+        window.loggedIn = false;
 
-			// 2. Mostrar la sección seleccionada
-			const targetSection = document.getElementById(pageId);
-			if (targetSection) {
-				targetSection.classList.remove('hidden');
-				window.scrollTo({ top: 0, behavior: 'smooth' });
-			}
+        window.handleLogin = async function (event) {
+            event.preventDefault();
+            const email=$("login-user").value.trim().toLowerCase(), password=$("login-pass").value;
+            try {
+                await signInWithEmailAndPassword(auth,email,password);
+                $("login-pass").value=""; $("login-error").classList.add("hidden");
+            } catch(error) {
+                console.error(error); $("login-error").textContent="Correo o contraseña incorrectos, o cuenta no autorizada."; $("login-error").classList.remove("hidden");
+            }
+        };
+        window.logoutAdmin = async () => {
+            try { await signOut(auth); window.loggedIn=false; currentRole=null; currentProfile=null; $("backoffice-modal")?.classList.add("hidden"); showNotice("Has cerrado la sesión de forma segura.","info"); }
+            catch(e){showNotice("No se pudo cerrar la sesión. Inténtalo nuevamente.","error");}
+        };
+        window.switchAdminTab = tabName => {
+            if (["users","settings"].includes(tabName) && currentRole !== "Administrador") { showNotice("Esta sección está reservada al administrador.","error"); return; }
+            document.querySelectorAll(".admin-content").forEach(el => el.classList.add("hidden"));
+            document.querySelectorAll(".admin-tab-btn").forEach(btn => {
+                btn.classList.remove("bg-marra-green", "text-white");
+                btn.classList.add("text-slate-400");
+            });
+            $(`admin-${tabName}`)?.classList.remove("hidden");
+            const button = $(`tab-btn-${tabName}`);
+            if (button) {
+                button.classList.add("bg-marra-green", "text-white");
+                button.classList.remove("text-slate-400");
+            }
+        };
+        window.execCmd = command => {
+            $("blog-editor")?.focus();
+            document.execCommand(command, false, null);
+        };
+        window.triggerWaReply = index => {
+            const option = window.appData.whatsapp.options[index];
+            if (!option) return;
+            const url = `https://wa.me/${normalizePhone(window.appData.whatsapp.phone)}?text=${encodeURIComponent(option.reply)}`;
+            window.open(url, "_blank", "noopener,noreferrer");
+        };
+        window.navigateTo = pageId => {
+            document.querySelectorAll(".page-section").forEach(section => section.classList.add("hidden"));
+            const target = $(pageId);
+            if (target) target.classList.remove("hidden");
+            document.querySelectorAll(".nav-link-btn").forEach(button => {
+                const active = button.dataset.page === pageId;
+                button.classList.toggle("text-marra-green", active);
+                button.classList.toggle("font-bold", active);
+                button.classList.toggle("border-b-2", active);
+                button.classList.toggle("border-marra-green", active);
+                button.classList.toggle("text-slate-700", !active);
+            });
+            history.replaceState(null, "", `#${pageId}`);
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        };
 
-			// 3. Actualizar la apariencia activa de los botones del menú
-			document.querySelectorAll('.nav-link-btn').forEach(btn => {
-				if (btn.getAttribute('data-page') === pageId) {
-					btn.classList.add('text-marra-green', 'font-bold', 'border-b-2', 'border-marra-green');
-					btn.classList.remove('text-slate-700');
-				} else {
-					btn.classList.remove('text-marra-green', 'font-bold', 'border-b-2', 'border-marra-green');
-					btn.classList.add('text-slate-700');
-				}
-			});
-		}
+        window.submitQuickQuote = event => {
+            event.preventDefault();
+            const company = $("qq-company").value.trim();
+            const phone = $("qq-phone").value.trim();
+            const category = $("qq-category").value;
+            const message = `Hola MARRAFLAB. Empresa: ${company}. Teléfono: ${phone}. Estoy interesado en: ${category}.`;
+            window.open(`https://wa.me/${normalizePhone(window.appData.whatsapp.phone)}?text=${encodeURIComponent(message)}`, "_blank", "noopener,noreferrer");
+            event.target.reset();
+        };
+        window.submitContactForm = event => {
+            event.preventDefault();
+            const form = event.target;
+            const fields = form.querySelectorAll("input, textarea");
+            const [name, email, phone, company, messageText] = [...fields].map(field => field.value.trim());
+            const message = `Hola MARRAFLAB, soy ${name}. Correo: ${email}. Teléfono: ${phone}. Empresa: ${company || "No indicada"}. Requerimiento: ${messageText}`;
+            window.open(`https://wa.me/${normalizePhone(window.appData.whatsapp.phone)}?text=${encodeURIComponent(message)}`, "_blank", "noopener,noreferrer");
+            showNotice("Se abrió WhatsApp con tu consulta lista para enviar.");
+            form.reset();
+        };
+
+        document.addEventListener("keydown", event => {
+            if (event.key === "Escape") {
+                $("login-modal")?.classList.add("hidden");
+                $("detail-modal")?.classList.add("hidden");
+                $("backoffice-modal")?.classList.add("hidden");
+                closeRecordEditor();
+                $("wa-chat-window")?.classList.add("hidden");
+            }
+        });
+        document.addEventListener("DOMContentLoaded", () => {
+            const hash = location.hash.replace("#", "");
+            const validPages = ["inicio","nosotros","servicios","productos","testimonios","galeria","blog","contacto"];
+            if (validPages.includes(hash)) window.navigateTo(hash);
+            else window.navigateTo("inicio");
+            initializeFirebase();
+        });
     </script>
 </body>
 </html>
