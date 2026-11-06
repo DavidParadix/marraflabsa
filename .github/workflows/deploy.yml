@@ -23,6 +23,8 @@ jobs:
           cd functions && npm install && cd ..
 
       - name: Desplegar todo a Firebase
-        run: firebase deploy --only firestore:rules,storage,functions
+        run: |
+          firebase use marraflabsa
+          firebase deploy --only firestore:rules,storage,functions
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_MARRAFLABSA }}
