@@ -669,14 +669,51 @@
                     <div id="products-table-container"></div>
                 </div>
 
-                <!-- TAB WHATSAPP -->
-                <div id="admin-whatsapp" class="admin-content space-y-4 hidden">
-                    <h4 class="text-lg font-bold">Bot WhatsApp</h4>
-                    <div class="grid sm:grid-cols-2 gap-3 text-xs">
-                        <input type="text" id="wa-phone" placeholder="Número WhatsApp (ej: 593998765432)" class="p-2.5 bg-slate-800 border border-slate-700 rounded-lg text-white">
-                        <input type="text" id="wa-msg" placeholder="Mensaje inicial..." class="p-2.5 bg-slate-800 border border-slate-700 rounded-lg text-white">
+				<!-- TAB WHATSAPP BOT AVANZADO -->
+                <div id="admin-whatsapp" class="admin-content space-y-6 hidden">
+                    <div>
+                        <h4 class="text-lg font-bold text-white">Configuración del Bot de WhatsApp</h4>
+                        <p class="text-xs text-slate-400">Personaliza el número general, el mensaje de bienvenida y las opciones interactivas que verá el cliente.</p>
                     </div>
-                    <button onclick="saveWaSettings()" class="bg-marra-green text-white font-bold px-4 py-2 rounded-lg text-xs">Guardar Bot</button>
+
+                    <!-- Configuración general -->
+                    <div class="bg-slate-800 p-5 rounded-xl border border-slate-700 space-y-4 text-xs">
+                        <div class="grid sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-slate-400 mb-1 font-bold">Número de WhatsApp (Sin signos, ej: 593998765432)</label>
+                                <input type="text" id="wa-phone" class="w-full p-2.5 bg-slate-900 border border-slate-700 rounded-lg text-white">
+                            </div>
+                            <div>
+                                <label class="block text-slate-400 mb-1 font-bold">Mensaje Inicial / Bienvenida del Chatbot</label>
+                                <input type="text" id="wa-msg" class="w-full p-2.5 bg-slate-900 border border-slate-700 rounded-lg text-white">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Constructor de Opciones y Respuestas -->
+                    <div class="bg-slate-800 p-5 rounded-xl border border-slate-700 space-y-4 text-xs">
+                        <h5 class="text-xs font-bold text-marra-green uppercase flex items-center gap-1.5">
+                            <i class="fas fa-list-check"></i> Opciones Interactivas del Bot
+                        </h5>
+                        <p class="text-[11px] text-slate-400">Añade los botones de preguntas frecuentes que el cliente podrá presionar en el chat flotante.</p>
+
+                        <div class="grid sm:grid-cols-2 gap-3">
+                            <input type="text" id="wa-opt-label" placeholder="Título del botón (ej: Ver Precios THUNDER)" class="p-2.5 bg-slate-900 border border-slate-700 rounded-lg text-white">
+                            <input type="text" id="wa-opt-reply" placeholder="Respuesta automática enviada a WhatsApp" class="p-2.5 bg-slate-900 border border-slate-700 rounded-lg text-white">
+                        </div>
+                        <button onclick="addWaOption()" class="bg-thunder-blue hover:bg-thunder-darkblue text-white font-bold px-4 py-2 rounded-lg text-xs transition">
+                            <i class="fas fa-plus mr-1"></i> Añadir Opción al Bot
+                        </button>
+
+                        <!-- Tabla de Opciones Activas -->
+                        <div id="wa-options-table-container" class="mt-3">
+                            <!-- Se renderiza dinámicamente -->
+                        </div>
+                    </div>
+
+                    <button onclick="saveWaSettings()" class="bg-marra-green hover:bg-marra-darkgreen text-white font-bold px-5 py-3 rounded-xl text-xs uppercase tracking-wider shadow-md transition">
+                        Guardar Toda la Configuración del Bot
+                    </button>
                 </div>
 
                 <!-- TAB GALERÍA -->
@@ -1107,6 +1144,28 @@
             await window.saveData();
             alert("¡Configuración guardada exitosamente!");
         };
+		
+		// Añadir una opción al Bot de WhatsApp
+		window.addWaOption = async function() {
+			const label = document.getElementById('wa-opt-label').value;
+			const reply = document.getElementById('wa-opt-reply').value;
+			if(!label || !reply) return alert("Completa el título del botón y la respuesta");
+			
+			if(!window.appData.whatsapp.options) window.appData.whatsapp.options = [];
+			window.appData.whatsapp.options.push({ label, reply });
+			
+			document.getElementById('wa-opt-label').value = '';
+			document.getElementById('wa-opt-reply').value = '';
+			await window.saveData();
+			renderWaOptionsTable();
+		};
+
+		// Eliminar opción del Bot
+		window.deleteWaOption = async function(idx) {
+			window.appData.whatsapp.options.splice(idx, 1);
+			await window.saveData();
+			renderWaOptionsTable();
+		};
 
         window.onload = function() { renderAll(); };
     </script>
@@ -1195,6 +1254,30 @@
             `;
             modal.classList.remove('hidden');
         }
+		
+		// Renderizar la tabla de opciones en el panel admin
+		function renderWaOptionsTable() {
+			const container = document.getElementById('wa-options-table-container');
+			if(!container) return;
+			const options = window.appData.whatsapp.options || [];
+			container.innerHTML = `
+				<table class="w-full text-xs text-left text-slate-300 mt-2 border border-slate-700 rounded-lg overflow-hidden">
+					<thead class="bg-slate-900 text-slate-400 uppercase">
+						<tr><th class="p-2">Botón / Opción</th><th class="p-2">Respuesta Configurada</th><th class="p-2">Acción</th></tr>
+					</thead>
+					<tbody>
+						${options.length === 0 ? '<tr><td colspan="3" class="p-3 text-center text-slate-500">No hay opciones creadas aún.</td></tr>' : 
+						options.map((o, i) => `
+							<tr class="border-t border-slate-700">
+								<td class="p-2 font-bold text-white">${o.label}</td>
+								<td class="p-2 text-slate-400">${o.reply}</td>
+								<td class="p-2"><button onclick="deleteWaOption(${i})" class="text-red-400 hover:text-red-300 font-bold">Eliminar</button></td>
+							</tr>
+						`).join('')}
+					</tbody>
+				</table>
+			`;
+		}
 
         function openBlogModal(index) {
             const article = window.appData.blog[index];
