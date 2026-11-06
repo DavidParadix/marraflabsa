@@ -1,9 +1,9 @@
-name: Deploy Firebase Rules and Functions
+name: Deploy Firebase Rules and Hosting
 
 on:
   push:
     branches:
-      - main # O master según tu rama
+      - main
 
 jobs:
   deploy:
@@ -17,13 +17,11 @@ jobs:
         with:
           node-version: 20
 
-      - name: Instalar Firebase CLI y dependencias de Functions
-        run: |
-          npm install -g firebase-tools
-          cd functions && npm install && cd ..
+      - name: Instalar Firebase CLI
+        run: npm install -g firebase-tools
 
-      - name: Crear archivo temporal de credenciales y desplegar
+      - name: Crear archivo temporal de credenciales y desplegar reglas
         run: |
           echo '${{ secrets.FIREBASE_SERVICE_ACCOUNT_MARRAFLABSA }}' > ./service-account.json
           export GOOGLE_APPLICATION_CREDENTIALS="./service-account.json"
-          firebase deploy --only firestore:rules,functions --project marraflabsa
+          firebase deploy --only firestore:rules,storage --project marraflabsa
