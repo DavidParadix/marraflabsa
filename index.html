@@ -1334,18 +1334,29 @@
             window.appData.whatsapp.options.splice(index, 1);
             await window.saveData();
         };
-        window.addGalleryImage = async () => {
-            const title = $("gal-title").value.trim();
-            if (!title) return showNotice("Escribe un título para la imagen.", "error");
-            try {
-                let url = $("gal-img-url").value.trim() || "";
-                if ($("gal-img-file").files[0]) url = await window.fileToBase64($("gal-img-file").files[0]);
-                if (!url) return showNotice("Selecciona una imagen o pega su URL.", "error");
-                window.appData.gallery.push({ id: makeId("gal"), title, url });
-                pendingActivity={action:"Creación",section:"Galería",details:`Nueva imagen: ${title}`,successMessage:"La imagen se añadió a la galería."};
-                if (await window.saveData()) $("gal-title").value = $("gal-img-url").value = $("gal-img-file").value = "";
-            } catch (error) { showNotice(error.message, "error"); }
-        };
+		window.addGalleryImage = async () => {
+		    const title = $("gal-title").value.trim();
+		    if (!title) return showNotice("Escribe un título para la imagen.", "error");
+		    try {
+		        let url = $("gal-img-url").value.trim() || "";
+		        // Asegúrate de que use fileToBase64 o el Storage de Firebase correctamente
+		        if ($("gal-img-file").files[0]) {
+		            url = await window.fileToBase64($("gal-img-file").files[0]);
+		        }
+		        if (!url) return showNotice("Selecciona una imagen o pega su URL.", "error");
+		        
+		        window.appData.gallery.push({ id: makeId("gal"), title, url });
+		        pendingActivity = { action: "Creación", section: "Galería", details: `Nueva imagen: ${title}`, successMessage: "La imagen se añadió a la galería." };
+		        
+		        if (await window.saveData()) {
+		            $("gal-title").value = "";
+		            $("gal-img-url").value = "";
+		            $("gal-img-file").value = "";
+		        }
+		    } catch (error) { 
+		        showNotice(error.message, "error"); 
+		    }
+		};
         window.addBlogPost = async () => {
             const title = $("blog-title").value.trim(), content = cleanRichText($("blog-editor").innerHTML);
             if (!title || !content.trim()) return showNotice("Escribe el título y el contenido del artículo.", "error");
