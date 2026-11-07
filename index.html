@@ -970,37 +970,44 @@
                     console.warn("Sincronización Firestore:", error);
                     setAdminSaveStatus("Sincronización interrumpida", "error");
                 });
-                onAuthStateChanged(auth, async user => {
-                    currentUser = user || null;
-                    currentRole = null; currentProfile = null; window.loggedIn = false;
-                    if (user) {
-                        try {
-                            const profileSnap = await getDoc(doc(db, "userRoles", user.uid));
-                            if (!profileSnap.exists() || profileSnap.data().active === false) {
-                                await signOut(auth);
-                                showNotice("Tu cuenta no tiene permisos activos para el panel.", "error");
-                                return;
-                            }
-                            currentProfile = profileSnap.data();
-                            currentRole = currentProfile.role;
-                            window.loggedIn = ["Administrador", "Editor"].includes(currentRole);
-                            if (window.loggedIn) {
-                                closeLoginModal();
-                                $("backoffice-modal")?.classList.remove("hidden");
-                                applyPermissions();
-                                switchAdminTab(currentRole === "Administrador" ? "users" : "services");
-                                setAdminSaveStatus(`Sesión activa: ${currentProfile.name || user.email} · ${currentRole}`, "success");
-                                loadActivity();
-                                if (currentRole === "Administrador") loadManagedUsers();
-                            }
-                        } catch (e) {
-                            console.error(e); await signOut(auth);
-                            showNotice("No se pudieron verificar tus permisos. Contacta al administrador.", "error");
-                        }
-                    } else {
-                        $("backoffice-modal")?.classList.add("hidden");
-                    }
-                });
+				onAuthStateChanged(auth, async user => {
+					currentUser = user || null;
+					currentRole = null; currentProfile = null; window.loggedIn = false;
+					if (user) {
+						try {
+							// BYPASS TEMPORAL: Permitir acceso de administrador absoluto a tu correo
+							if (user.email === "mar.raf.lab.productosquimicos@gmail.com") {
+								currentRole = "Administrador";
+								currentProfile = { name: "Administrador Principal", role: "Administrador", active: true };
+							} else {
+								const profileSnap = await getDoc(doc(db, "userRoles", user.uid));
+								if (!profileSnap.exists() || profileSnap.data().active === false) {
+									await signOut(auth);
+									showNotice("Tu cuenta no tiene permisos activos para el panel.", "error");
+									return;
+								}
+								currentProfile = profileSnap.data();
+								currentRole = currentProfile.role;
+							}
+
+							window.loggedIn = ["Administrador", "Editor"].includes(currentRole);
+							if (window.loggedIn) {
+								closeLoginModal();
+								$("backoffice-modal")?.classList.remove("hidden");
+								applyPermissions();
+								switchAdminTab(currentRole === "Administrador" ? "users" : "services");
+								setAdminSaveStatus(`Sesión activa: ${currentProfile.name || user.email} · ${currentRole}`, "success");
+								loadActivity();
+								if (currentRole === "Administrador") loadManagedUsers();
+							}
+						} catch (e) {
+							console.error(e); await signOut(auth);
+							showNotice("No se pudieron verificar tus permisos. Contacta al administrador.", "error");
+						}
+					} else {
+						$("backoffice-modal")?.classList.add("hidden");
+					}
+				});
             } catch (error) {
                 console.error("Firebase no disponible:", error);
                 const cached = localStorage.getItem(STORAGE_KEY);
