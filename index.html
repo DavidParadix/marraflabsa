@@ -890,13 +890,28 @@
         window.fileToBase64 = async file => {
             if (!file) return "";
             if (!file.type.startsWith("image/")) throw new Error("Selecciona un archivo de imagen válido.");
-            if (file.size > 5 * 1024 * 1024) throw new Error("La imagen supera 5 MB. Reduce su tamaño antes de subirla.");
-            if (!storage || !currentUser) throw new Error("Debes iniciar sesión para subir imágenes.");
-            const cleanName = file.name.replace(/[^a-zA-Z0-9._-]/g, "_").slice(-80);
-            const path = `site-assets/${currentUser.uid}/${Date.now()}-${cleanName}`;
-            const target = storageRef(storage, path);
-            await uploadBytes(target, file, { contentType: file.type });
-            return await getDownloadURL(target);
+            if (file.size > 5 * 1024 * 1024) throw new Error("La imagen supera 5 MB.");
+            
+            // Si el Storage o el usuario fallan, intentamos convertir a Base64 temporal o exigir URL directa
+            try {
+                if (storage && currentUser) {
+                    const cleanName = file.name.replace(/[^a-zA-Z0-9._-]/g, "_").slice(-80);
+                    const path = `site-assets/${currentUser.uid || 'admin'}/${Date.now()}-${cleanName}`;
+                    const target = storageRef(storage, path);
+                    await uploadBytes(target, file, { contentType: file.type });
+                    return await getDownloadURL(target);
+                }
+            } catch (err) {
+                console.warn("Storage falló, usando alternativa:", err);
+            }
+            
+            // Alternativa segura si Storage da problemas: usar lector local de Base64 directo
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = error => reject(error);
+                reader.readAsDataURL(file);
+            });
         };
 
         function setAdminSaveStatus(message, type = "normal") {
